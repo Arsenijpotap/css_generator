@@ -1,0 +1,23 @@
+const colors = [
+  "#FF5733", "#33FF57", "#3357FF", "#F033FF", "#FF33A8", 
+  "#33FFF5", "#FF8C33", "#8C33FF", "#33FF8C", "#FF338C",
+  "#5733FF", "#FFBD33", "#33FFBD", "#BD33FF", "#FF33F5",
+  "#33A8FF", "#A833FF", "#FF33BD", "#33FF33", "#FF5733",
+  "#33FF57", "#3357FF", "#F033FF", "#FF33A8", "#33FFF5",
+  "#FF8C33", "#8C33FF", "#33FF8C", "#FF338C", "#5733FF",
+  "#FFBD33", "#33FFBD", "#BD33FF", "#FF33F5", "#33A8FF",
+  "#A833FF", "#FF33BD", "#33FF33", "#FF5733", "#33FF57",
+  "#3357FF", "#F033FF", "#FF33A8", "#33FFF5", "#FF8C33",
+  "#8C33FF", "#33FF8C", "#FF338C", "#5733FF", "#FFBD33",
+  "#33FFBD", "#BD33FF", "#FF33F5", "#33A8FF", "#A833FF",
+  "#FF33BD", "#33FF33", "#FF5733", "#33FF57", "#3357FF",
+  "#F033FF", "#FF33A8", "#33FFF5", "#FF8C33", "#8C33FF",
+  "#33FF8C", "#FF338C", "#5733FF", "#FFBD33", "#33FFBD",
+  "#BD33FF", "#FF33F5", "#33A8FF", "#A833FF", "#FF33BD",
+  "#33FF33", "#FF5733", "#33FF57", "#3357FF", "#F033FF",
+  "#FF33A8", "#33FFF5", "#FF8C33", "#8C33FF", "#33FF8C",
+  "#FF338C", "#5733FF", "#FFBD33", "#33FFBD", "#BD33FF",
+  "#FF33F5", "#33A8FF", "#A833FF", "#FF33BD", "#33FF33",
+  "#FF5733", "#33FF57", "#3357FF", "#F033FF", "#FF33A8"
+];
+export default colors
