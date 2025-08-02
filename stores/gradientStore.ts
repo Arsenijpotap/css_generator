@@ -57,7 +57,7 @@ const useGradientStore = create<GradientStore>()((set) => ({
 	randomizeColors: () =>
 		set((state) => {
 			let randomColorList = [];
-			const colorCount = Math.random() * 2 + 1;
+			const colorCount = Math.random() * 1.4 + 1;
 			for (let i = 0; i < colorCount; i++) {
 				randomColorList.push({
 					position: Math.round(Math.min((Math.random() * 100) / (colorCount + 3) + (100 / colorCount) * i, 100)),

@@ -9,7 +9,7 @@ import { Tab, Tabs } from "@heroui/tabs";
 import { Slider } from "@heroui/slider";
 import { Button } from "@heroui/button";
 import useGradientStore from "@/stores/gradientStore";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Gradient() {
 	const degrees = useGradientStore((state) => state.degrees);
@@ -22,6 +22,8 @@ export default function Gradient() {
 	const changePos = useGradientStore((state) => state.changePos);
 	const randomizeColors = useGradientStore((state) => state.randomizeColors);
 	const deleteColor = useGradientStore((state) => state.deleteColor);
+
+	const [copied, setCopied] = useState(false);
 
 	let colorsCss = "";
 	const sortedColorsList = [...colorsList].sort((a, b) => a.position - b.position);
@@ -38,22 +40,14 @@ export default function Gradient() {
 		<div className="conteiner">
 			<div className="gradient">
 				<Card className="gradient__box">
-					<div style={{ backgroundImage: `${type}-gradient(${type == "linear" ? degrees + "deg," : ""} ${colorsCss}` }} className="gradient__example"></div>
+					<div style={{ backgroundImage: `${type}-gradient(${type == "linear" ? degrees + "deg," : ""} ${colorsCss} )` }} className="gradient__example"></div>
 				</Card>
 				<Card className="gradient__settings">
 					<Tabs className="gradient__tabs">
 						<Tab onClick={() => setType("linear")} title="Linear"></Tab>
 						<Tab onClick={() => setType("radial")} title="Radial"></Tab>
 					</Tabs>
-					<Button
-						size="md"
-						className="gradient__randomizeButton"
-						onClick={() => {
-							randomizeColors();
-						}}
-					>
-						randomize
-					</Button>
+
 					<Slider
 						classNames={{
 							base: "max-w-md",
@@ -166,8 +160,27 @@ export default function Gradient() {
 							</button>
 						</div>
 					</div>
-					<Button color="primary" className="gradient__" variant="solid">
-						Solid
+					<Button
+						onClick={() => {
+							navigator.clipboard.writeText(`background-image: ${type}-gradient(${type == "linear" ? degrees + "deg," : ""} ${colorsCss});`).then(() => {
+								setCopied(true);
+								setTimeout(() => setCopied(false), 2000);
+							});
+						}}
+						color="primary"
+						className="gradient__copyButton"
+						variant="solid"
+					>
+						Copy CSS
+					</Button>
+					<Button
+						size="md"
+						className="gradient__randomizeButton"
+						onClick={() => {
+							randomizeColors();
+						}}
+					>
+						Randomize
 					</Button>
 				</Card>
 			</div>
