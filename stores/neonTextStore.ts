@@ -22,8 +22,8 @@ interface NeonTextStore {
 	time: number;
 	setTime: (val: number) => void;
 
-	animationType: "off" | "smooth" | "sharp";
-	setAnimationType: (val: "off" | "smooth" | "sharp") => void;
+	animationType: "off" | "smooth" | "sharp" | "pulse";
+	setAnimationType: (val: "off" | "smooth" | "sharp" | "pulse") => void;
 
 	randomizeValues: () => void;
 }
@@ -41,7 +41,7 @@ const useNeonTextStore = create<NeonTextStore>()((set) => ({
 	opacity: 100,
 	setOpacity: (value) => set((state) => ({ opacity: value })),
 
-	time: 1,
+	time: 3,
 	setTime: (value) => set((state) => ({ time: value })),
 
 	level: 50,

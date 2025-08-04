@@ -43,9 +43,9 @@ export default function Gradient() {
 					<div style={{ backgroundImage: `${type}-gradient(${type == "linear" ? degrees + "deg," : ""} ${colorsCss} )` }} className="gradient__example"></div>
 				</Card>
 				<Card className="gradient__settings">
-					<Tabs className="gradient__tabs">
-						<Tab onClick={() => setType("linear")} title="Linear"></Tab>
-						<Tab onClick={() => setType("radial")} title="Radial"></Tab>
+					<Tabs selectedKey={type} className="gradient__tabs">
+						<Tab key={"linear"} onClick={() => setType("linear")} title="Linear"></Tab>
+						<Tab key={"radial"} onClick={() => setType("radial")} title="Radial"></Tab>
 					</Tabs>
 
 					<Slider

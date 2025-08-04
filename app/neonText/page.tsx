@@ -8,6 +8,7 @@ import { Slider } from "@heroui/slider";
 import useNeonTextStore from "@/stores/neonTextStore";
 import { Button } from "@heroui/button";
 import { Tab, Tabs } from "@heroui/react";
+import { useEffect } from "react";
 
 function NeonText() {
 	const blur = useNeonTextStore((state) => state.blur);
@@ -25,6 +26,104 @@ function NeonText() {
 	const animationType = useNeonTextStore((state) => state.animationType);
 	const setAnimationType = useNeonTextStore((state) => state.setAnimationType);
 	const randomizeValues = useNeonTextStore((state) => state.randomizeValues);
+
+	useEffect(() => {
+		const style = document.createElement("style");
+		switch (animationType) {
+			case "pulse":
+				style.textContent = `
+      @keyframes pulse {
+        0% { transform: scale(1);  }
+        50% { transform: scale(${1 + level / 100}); }
+        100% { transform: scale(1);  }
+      }
+      .neonText__exampleText {
+        animation: pulse ${time}s infinite;
+      }
+    `;
+				break;
+			case "sharp":
+				let shadowCss = "";
+				for (let i = 5; i <= 20; i *= 2) {
+					shadowCss += `0 0 ${(i / 50) * blur}px #fff,`;
+				}
+				for (let i = 20; i <= 40 + 10 * size; i += 10) {
+					shadowCss += `0 0 ${(i / 50) * blur}px ${
+						color +
+						Math.round(opacity * 2.55)
+							.toString(16)
+							.padStart(2, "0")
+					},`;
+				}
+				console.log(41 + Math.min(Math.round(30 / time) / 10, 1));
+				shadowCss = shadowCss.slice(0, -1);
+				style.textContent = `
+      @keyframes pulse {
+      0% { text-shadow: ${shadowCss}}
+      40% { text-shadow: ${shadowCss}}
+	  41% { text-shadow: none }
+      ${41 + Math.min(Math.round(30 / time) / 10, 1)}% { text-shadow: ${shadowCss}}
+      ${Math.round(41 + Math.min(18 / time, 10))}% { text-shadow: none}
+      ${Math.round(41 + Math.min(18 / time, 10)) + Math.min(Math.round(30 / time) / 10, 1)}%  { text-shadow: ${shadowCss}}
+	// 
+	
+        100% { text-shadow: ${shadowCss}}
+      }
+      .neonText__exampleText {
+	  transition:0s;
+    animation: pulse ${time}s step-end infinite;
+      }
+    `;
+				break;
+			case "smooth":
+				let inithialShadowCss = "";
+				for (let i = 5; i <= 20; i *= 2) {
+					inithialShadowCss += `0 0 ${(i / 50) * blur + level / 10}px #fff,`;
+				}
+				for (let i = 20; i <= 40 + 10 * size; i += 10) {
+					inithialShadowCss += `0 0 ${(i / 50) * blur}px ${
+						color +
+						Math.round(opacity * 2.55)
+							.toString(16)
+							.padStart(2, "0")
+					},`;
+				}
+				let endShadowCss = "";
+				for (let i = 5; i <= 20; i *= 2) {
+					endShadowCss += `0 0 ${(i / 50) * blur}px #fff,`;
+				}
+				for (let i = 20; i <= 40 + 10 * size; i += 10) {
+					endShadowCss += `0 0 ${(i / 50) * blur + level / 4}px ${
+						color +
+						Math.round(opacity * 2.55)
+							.toString(16)
+							.padStart(2, "0")
+					},`;
+				}
+				inithialShadowCss = inithialShadowCss.slice(0, -1);
+				endShadowCss = endShadowCss.slice(0, -1);
+
+				style.textContent = `
+      @keyframes pulse {
+        0% { text-shadow: ${inithialShadowCss}}
+        40% { text-shadow: ${endShadowCss} }
+        100% { text-shadow: ${inithialShadowCss}}
+      }
+      .neonText__exampleText {
+        animation: pulse ${time}s infinite;
+      }
+    `;
+			default:
+				break;
+		}
+
+		document.head.appendChild(style);
+
+		return () => {
+			// Очистка при размонтировании
+			document.head.removeChild(style);
+		};
+	}, [time, level, animationType, blur, size, color, opacity]);
 
 	let shadowCss = "";
 	for (let i = 5; i <= 20; i *= 2) {
@@ -176,12 +275,93 @@ function NeonText() {
 						/>
 					</div>
 					<p className="neonText__text">Animation</p>
-					<Tabs className="neonText__tabs">
-						<Tab onClick={() => setAnimationType("off")} title="Off"></Tab>
-						<Tab onClick={() => setAnimationType("smooth")} title="Smooth"></Tab>
-						<Tab onClick={() => setAnimationType("sharp")} title="Sharp"></Tab>
+					<Tabs selectedKey={animationType} className="neonText__tabs">
+						<Tab key={"off"} onClick={() => setAnimationType("off")} title="Off"></Tab>
+						<Tab key={"smooth"} onClick={() => setAnimationType("smooth")} title="Smooth"></Tab>
+						<Tab key={"sharp"} onClick={() => setAnimationType("sharp")} title="Sharp"></Tab>
+						<Tab key={"pulse"} onClick={() => setAnimationType("pulse")} title="Pulse"></Tab>
 					</Tabs>
+					<Slider
+						classNames={{
+							base: "max-w-md",
+							label: "text-medium",
+						}}
+						label="Time"
+						isDisabled={animationType == "off"}
+						maxValue={10}
+						minValue={0}
+						renderValue={({ children, ...props }) => (
+							<output {...props}>
+								<input
+									max={10}
+									min={0}
+									aria-label="Time value"
+									className="neonText__numberBox"
+									type="number"
+									value={time}
+									onChange={(e) => {
+										const v = parseFloat(e.target.value);
+										if (v <= 10) setTime(v);
+										if (v > 10) setTime(10);
+										if (v < 0) setTime(0);
+										if (Number.isNaN(v)) setTime(0);
+									}}
+									onKeyDown={(e) => {
+										if (e.key === "Enter" && !isNaN(Number(time))) {
+											setTime(Number(time));
+										}
+									}}
+								/>
+							</output>
+						)}
+						size="md"
+						step={0.1}
+						value={time}
+						onChange={(e) => {
+							setTime(typeof e == "number" ? e : e[0]);
+						}}
+					></Slider>
 
+					<Slider
+						classNames={{
+							base: "max-w-md",
+							label: "text-medium",
+						}}
+						isDisabled={animationType == "off" || animationType == "sharp"}
+						label="Level"
+						maxValue={100}
+						minValue={0}
+						renderValue={({ children, ...props }) => (
+							<output {...props}>
+								<input
+									max={100}
+									min={0}
+									aria-label="Level value"
+									className="neonText__numberBox"
+									type="number"
+									value={level}
+									onChange={(e) => {
+										const v = parseFloat(e.target.value);
+										if (v <= 100) setLevel(v);
+										if (v > 100) setLevel(100);
+										if (v < 0) setLevel(0);
+										if (Number.isNaN(v)) setLevel(0);
+									}}
+									onKeyDown={(e) => {
+										if (e.key === "Enter" && !isNaN(Number(level))) {
+											setLevel(Number(level));
+										}
+									}}
+								/>
+							</output>
+						)}
+						size="md"
+						step={1}
+						value={level}
+						onChange={(e) => {
+							setLevel(typeof e == "number" ? e : e[0]);
+						}}
+					></Slider>
 					<Button
 						size="md"
 						className="neonText__randomizeButton"
