@@ -1,10 +1,6 @@
 /** @format */
 
 import { create } from "zustand";
-interface colorParams {
-	position: number;
-	color: string;
-}
 
 interface AppStore {
 	mode: "gradient" | "neon text";

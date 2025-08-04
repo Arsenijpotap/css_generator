@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 // Исправьте ваш RootLayout (app/layout.tsx)
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en" className="light" style={{ colorScheme: "light" }}>
+		<html lang="en">
 			<body>
 				<Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
 					<Header></Header>
