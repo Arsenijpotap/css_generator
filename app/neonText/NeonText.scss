@@ -1,0 +1,202 @@
+/** @format */
+
+.neonText {
+	margin-top: 150px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	// &__example {
+	// 	width: 100%;
+	// 	height: 100%;
+	// 	background-image: linear-gradient(20deg, rgb(204, 255, 0), green);
+	// 	border-radius: 10px;
+	// }
+	&__exampleText {
+		margin-bottom: 15px;
+		font-size: 50px;
+		color: #fff;
+		// text-shadow:
+		// 	0 0 5px #fff,
+		// 	0 0 10px #fff,
+		// 	0 0 20px #fff,
+		// 	0 0 40px #0ff,
+		// 	0 0 80px #0ff,
+		// 	0 0 90px #0ff,
+		// 	0 0 100px #0ff,
+		// 	0 0 150px #0ff;
+	}
+	&__example {
+		background-image: url("https://www.transparenttextures.com/patterns/3px-tile.png");
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+
+		width: 100%;
+		height: 100%;
+		border-radius: 10px;
+
+		background-color: rgb(30, 30, 30);
+	}
+	&__box {
+		border-radius: 20px;
+		padding: 10px;
+		width: 400px;
+		height: 400px;
+		display: block;
+	}
+
+	&__settings {
+		position: relative;
+		border-radius: 20px;
+		padding: 10px;
+		width: 400px;
+		height: 400px;
+		display: block;
+	}
+	&__tabs {
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	&__numberBox {
+		width: calc(var(--spacing) * 15);
+		padding-inline: calc(var(--spacing) * 1); /* px-1 */
+		padding-block: calc(var(--spacing) * 0.5); /* py-0.5 */
+		text-align: right;
+
+		font-size: var(--heroui-font-size-small); /* text-small */
+		line-height: var(--heroui-line-height-small); /* text-small */
+		color: hsl(var(--heroui-default-700) / 1); /* text-default-700 */
+		font-weight: var(--font-weight-medium); /* font-medium */
+
+		background-color: hsl(var(--heroui-default-100) / 1); /* bg-default-100 */
+		border-radius: var(--heroui-radius-small); /* rounded-small */
+		border-width: var(--heroui-border-width-medium); /* border-medium */
+		border-style: var(--tw-border-style);
+		border-color: transparent; /* border-transparent */
+
+		outline-style: solid; /* outline-solid */
+		outline-color: transparent; /* outline-transparent */
+
+		transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+		transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+		transition-duration: var(--tw-duration, var(--default-transition-duration)); /* transition-colors */
+		&:hover {
+			border-color: hsl(var(--heroui-primary) / 1); /* hover:border-primary (предполагаемое значение) */
+		}
+
+		&:focus {
+			border-color: hsl(var(--heroui-primary) / 1); /* focus:border-primary */
+		}
+	}
+	&__opacity {
+		// margin-right: 10px;
+		width: calc(var(--spacing) * 16); /* w-12 */
+		padding-inline: calc(var(--spacing) * 1); /* px-1 */
+		padding-block: calc(var(--spacing) * 0.5); /* py-0.5 */
+		text-align: right; /* text-right */
+
+		font-size: var(--heroui-font-size-small); /* text-small */
+		line-height: var(--heroui-line-height-small); /* text-small */
+		color: hsl(var(--heroui-default-700) / 1); /* text-default-700 */
+		font-weight: var(--font-weight-medium); /* font-medium */
+
+		background-color: hsl(var(--heroui-default-100) / 1); /* bg-default-100 */
+		border-radius: var(--heroui-radius-small); /* rounded-small */
+		border-width: var(--heroui-border-width-medium); /* border-medium */
+		border-style: var(--tw-border-style);
+		border-color: transparent; /* border-transparent */
+
+		outline-style: solid; /* outline-solid */
+		outline-color: transparent; /* outline-transparent */
+
+		transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+		transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+		transition-duration: var(--tw-duration, var(--default-transition-duration)); /* transition-colors */
+		&:hover {
+			border-color: hsl(var(--heroui-primary) / 1); /* hover:border-primary (предполагаемое значение) */
+		}
+
+		&:focus {
+			border-color: hsl(var(--heroui-primary) / 1); /* focus:border-primary */
+		}
+	}
+
+	&__colorBlocks {
+		display: flex;
+		flex-direction: column;
+		justify-content: start;
+		align-items: center;
+		margin-top: 10px;
+		overflow-y: auto;
+		height: 220px;
+	}
+	&__opacitySlider {
+		margin: 0 5px;
+		width: 190px;
+	}
+	&__colorBlock {
+		height: 40px;
+		width: 380px;
+		display: flex;
+		align-items: center;
+		// gap: 10px;
+		border-bottom: 1px solid hsl(var(--heroui-default-100) / 1);
+
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+
+	&__colorCode {
+		width: calc(var(--spacing) * 19); /* w-12 */
+		padding-inline: calc(var(--spacing) * 1); /* px-1 */
+		padding-block: calc(var(--spacing) * 0.5); /* py-0.5 */
+		text-align: right; /* text-right */
+
+		font-size: var(--heroui-font-size-small); /* text-small */
+		line-height: var(--heroui-line-height-small); /* text-small */
+		color: hsl(var(--heroui-default-700) / 1); /* text-default-700 */
+		font-weight: var(--font-weight-medium); /* font-medium */
+
+		background-color: hsl(var(--heroui-default-100) / 1); /* bg-default-100 */
+		border-radius: var(--heroui-radius-small); /* rounded-small */
+		border-width: var(--heroui-border-width-medium); /* border-medium */
+		border-style: var(--tw-border-style);
+		border-color: transparent; /* border-transparent */
+
+		outline-style: solid; /* outline-solid */
+		outline-color: transparent; /* outline-transparent */
+
+		transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+		transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+		transition-duration: var(--tw-duration, var(--default-transition-duration)); /* transition-colors */
+		&:hover {
+			border-color: hsl(var(--heroui-primary) / 1); /* hover:border-primary (предполагаемое значение) */
+		}
+
+		&:focus {
+			border-color: hsl(var(--heroui-primary) / 1); /* focus:border-primary */
+		}
+
+		margin-left: 7px;
+		text-align: center;
+	}
+	&__color {
+		// display: block;
+		width: 36px;
+		height: 40px;
+		// outline: 1px solid black;
+		// outline: none;
+	}
+	&__randomizeButton {
+		position: absolute;
+		right: 10px;
+		bottom: 10px;
+		background-color: hsl(var(--heroui-default-100) / 1);
+		color: hsl(var(--heroui-default-700) / 1);
+		&:hover {
+			// color: #b2b2b7;
+		}
+	}
+}

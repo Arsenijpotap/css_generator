@@ -1,0 +1,200 @@
+/** @format */
+"use client";
+import { Card } from "@heroui/card";
+import "./NeonText.scss";
+import "../../styles/reset.scss";
+import "../../styles/main.scss";
+import { Slider } from "@heroui/slider";
+import useNeonTextStore from "@/stores/neonTextStore";
+import { Button } from "@heroui/button";
+import { Tab, Tabs } from "@heroui/react";
+
+function NeonText() {
+	const blur = useNeonTextStore((state) => state.blur);
+	const setBlur = useNeonTextStore((state) => state.setBlur);
+	const size = useNeonTextStore((state) => state.size);
+	const setSize = useNeonTextStore((state) => state.setSize);
+	const color = useNeonTextStore((state) => state.color);
+	const setColor = useNeonTextStore((state) => state.setColor);
+	const opacity = useNeonTextStore((state) => state.opacity);
+	const setOpacity = useNeonTextStore((state) => state.setOpacity);
+	const time = useNeonTextStore((state) => state.time);
+	const setTime = useNeonTextStore((state) => state.setTime);
+	const level = useNeonTextStore((state) => state.level);
+	const setLevel = useNeonTextStore((state) => state.setLevel);
+	const animationType = useNeonTextStore((state) => state.animationType);
+	const setAnimationType = useNeonTextStore((state) => state.setAnimationType);
+	const randomizeValues = useNeonTextStore((state) => state.randomizeValues);
+
+	let shadowCss = "";
+	for (let i = 5; i <= 20; i *= 2) {
+		shadowCss += `0 0 ${(i / 50) * blur}px #fff,`;
+	}
+	for (let i = 20; i <= 40 + 10 * size; i += 10) {
+		shadowCss += `0 0 ${(i / 50) * blur}px ${
+			color +
+			Math.round(opacity * 2.55)
+				.toString(16)
+				.padStart(2, "0")
+		},`;
+	}
+	shadowCss = shadowCss.slice(0, -1);
+	return (
+		<div className="conteiner">
+			<div className="neonText">
+				<Card className="neonText__box">
+					<div className="neonText__example">
+						<p className="neonText__exampleText" style={{ textShadow: shadowCss }}>
+							Neon text
+						</p>
+					</div>
+				</Card>
+				<Card className="neonText__settings">
+					<Slider
+						classNames={{
+							base: "max-w-md",
+							label: "text-medium",
+						}}
+						label="Blur"
+						maxValue={100}
+						minValue={0}
+						renderValue={({ children, ...props }) => (
+							<output {...props}>
+								<input
+									max={100}
+									min={0}
+									aria-label="Blur value"
+									className="neonText__numberBox"
+									type="number"
+									value={blur}
+									onChange={(e) => {
+										const v = parseFloat(e.target.value);
+										if (v <= 100) setBlur(v);
+										if (v > 100) setBlur(100);
+										if (v < 0) setBlur(0);
+										if (Number.isNaN(v)) setBlur(0);
+									}}
+									onKeyDown={(e) => {
+										if (e.key === "Enter" && !isNaN(Number(blur))) {
+											setBlur(Number(blur));
+										}
+									}}
+								/>
+							</output>
+						)}
+						size="md"
+						step={1}
+						value={blur}
+						onChange={(e) => {
+							setBlur(typeof e == "number" ? e : e[0]);
+						}}
+					/>
+					<Slider
+						classNames={{
+							base: "max-w-md",
+							label: "text-medium",
+						}}
+						label="Size"
+						maxValue={10}
+						minValue={0}
+						renderValue={({ children, ...props }) => (
+							<output {...props}>
+								<input
+									max={10}
+									min={0}
+									aria-label="Size value"
+									className="neonText__numberBox"
+									type="number"
+									value={size}
+									onChange={(e) => {
+										const v = parseFloat(e.target.value);
+										if (v <= 10) setSize(v);
+										if (v > 10) setSize(10);
+										if (v < 0) setSize(0);
+										if (Number.isNaN(v)) setSize(0);
+									}}
+									onKeyDown={(e) => {
+										if (e.key === "Enter" && !isNaN(Number(size))) {
+											setSize(Number(size));
+										}
+									}}
+								/>
+							</output>
+						)}
+						size="md"
+						step={1}
+						value={size}
+						onChange={(e) => {
+							setSize(typeof e == "number" ? e : e[0]);
+						}}
+					/>
+
+					<div className="neonText__colorBlock">
+						<input
+							type="color"
+							onChange={(e) => {
+								setColor(e.target.value);
+								console.log(e.target.value);
+							}}
+							value={color}
+							className="neonText__color"
+						/>
+						<input
+							type="text"
+							onChange={(e) => {
+								setColor(e.target.value);
+							}}
+							value={color}
+							className="neonText__colorCode"
+						/>
+						<Slider
+							value={opacity}
+							onChange={(e) => {
+								setOpacity(typeof e == "number" ? e : e[0]);
+							}}
+							aria-label="Opacity"
+							className="max-w-md neonText__opacitySlider"
+							maxValue={100}
+							minValue={0}
+							size="sm"
+							step={1}
+						/>
+						<input
+							max={100}
+							min={0}
+							aria-label="Opacity value"
+							className="neonText__opacity"
+							type="number"
+							value={opacity}
+							onChange={(e) => {
+								const v = parseFloat(e.target.value);
+								if (v <= 100) setOpacity(v);
+								if (v > 100) setOpacity(100);
+								if (v < 0) setOpacity(0);
+								if (Number.isNaN(v)) setOpacity(0);
+							}}
+						/>
+					</div>
+					<p className="neonText__text">Animation</p>
+					<Tabs className="neonText__tabs">
+						<Tab onClick={() => setAnimationType("off")} title="Off"></Tab>
+						<Tab onClick={() => setAnimationType("smooth")} title="Smooth"></Tab>
+						<Tab onClick={() => setAnimationType("sharp")} title="Sharp"></Tab>
+					</Tabs>
+
+					<Button
+						size="md"
+						className="neonText__randomizeButton"
+						onClick={() => {
+							randomizeValues();
+						}}
+					>
+						Randomize
+					</Button>
+				</Card>
+			</div>
+		</div>
+	);
+}
+
+export default NeonText;
