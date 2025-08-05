@@ -56,6 +56,8 @@ const useNeonTextStore = create<NeonTextStore>()((set) => ({
 			blur: Math.round(20 + Math.random() * 80),
 			size: Math.round(1 + Math.random() * 6),
 			color: colors[Math.round(Math.random() * (colors.length - 1))],
+			level: state.animationType == "smooth" ? Math.round(5 + Math.random() * 95) : state.animationType == "pulse" ? Math.round(1 + Math.random() * 30) : state.level,
+			time: state.animationType != "off" ? (state.animationType == "pulse" ? Math.round(10 + Math.random() * 70) / 10 : Math.round(1 + Math.random() * 99) / 10) : state.time,
 		})),
 }));
 export default useNeonTextStore;
