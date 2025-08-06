@@ -4,3 +4,25 @@
 	margin: 0 auto;
 	width: 1200px;
 }
+.box {
+	border-radius: 20px;
+	padding: 10px;
+	width: 400px;
+	height: 400px;
+	display: block;
+}
+
+.settings {
+	position: relative;
+	border-radius: 20px;
+	padding: 10px;
+	width: 400px;
+	height: 400px;
+	display: block;
+}
+.main {
+	margin-top: 150px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}

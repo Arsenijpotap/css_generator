@@ -40,11 +40,11 @@ export default function Gradient() {
 	// changePos(0,35)
 	return (
 		<div className="conteiner">
-			<div className="gradient">
-				<Card className="gradient__box">
+			<div className="gradient main">
+				<Card className="box">
 					<div style={{ backgroundImage: `${type}-gradient(${type == "linear" ? degrees + "deg," : ""} ${colorsCss} )` }} className="gradient__example"></div>
 				</Card>
-				<Card className="gradient__settings">
+				<Card className="settings">
 					<Tabs selectedKey={type} className="gradient__tabs">
 						<Tab key={"linear"} onClick={() => setType("linear")} title="Linear"></Tab>
 						<Tab key={"radial"} onClick={() => setType("radial")} title="Radial"></Tab>

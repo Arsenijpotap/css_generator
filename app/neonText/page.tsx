@@ -8,182 +8,158 @@ import { Slider } from "@heroui/slider";
 import useNeonTextStore from "@/stores/neonTextStore";
 import { Button } from "@heroui/button";
 import { Tab, Tabs } from "@heroui/react";
-import { useEffect, useMemo, useCallback } from "react";
+import { useEffect, useState } from "react";
 import useAppStore from "@/stores/appStore";
 
 function NeonText() {
-	const { blur, setBlur, size, setSize, color, setColor, opacity, setOpacity, time, setTime, level, setLevel, animationType, setAnimationType, randomizeValues } = useNeonTextStore();
+	const blur = useNeonTextStore((state) => state.blur);
+	const setBlur = useNeonTextStore((state) => state.setBlur);
+	const size = useNeonTextStore((state) => state.size);
+	const setSize = useNeonTextStore((state) => state.setSize);
+	const color = useNeonTextStore((state) => state.color);
+	const setColor = useNeonTextStore((state) => state.setColor);
+	const opacity = useNeonTextStore((state) => state.opacity);
+	const setOpacity = useNeonTextStore((state) => state.setOpacity);
+	const time = useNeonTextStore((state) => state.time);
+	const setTime = useNeonTextStore((state) => state.setTime);
+	const level = useNeonTextStore((state) => state.level);
+	const setLevel = useNeonTextStore((state) => state.setLevel);
+	const animationType = useNeonTextStore((state) => state.animationType);
+	const setAnimationType = useNeonTextStore((state) => state.setAnimationType);
+	const randomizeValues = useNeonTextStore((state) => state.randomizeValues);
 
-	const { setCopied } = useAppStore();
+	const copied = useAppStore((state) => state.copied);
+	const setCopied = useAppStore((state) => state.setCopied);
 
-	// Мемоизированное вычисление тени текста
-	const shadowCss = useMemo(() => {
-		if (animationType === "off" || animationType === "pulse") {
-			let css = "";
-			// Белые тени
-			for (let i = 5; i <= 20; i *= 2) {
-				css += `0 0 ${Math.round((i / 5) * blur) / 10}px #fff,`;
-			}
-			// Цветные тени
-			for (let i = 20; i <= 40 + 10 * size; i += 10) {
-				const opacityHex = Math.round(opacity * 2.55)
-					.toString(16)
-					.padStart(2, "0");
-				css += `0 0 ${Math.round((i / 5) * blur) / 10}px ${color + opacityHex},`;
-			}
-			return css.slice(0, -1);
-		}
-		return "";
-	}, [animationType, blur, size, color, opacity]);
-
-	// Генерация и применение анимации
+	let animationCss = "";
 	useEffect(() => {
-		const styleId = "neon-animation-style";
-		let style = document.getElementById(styleId);
-
-		if (!style) {
-			style = document.createElement("style");
-			style.id = styleId;
-			document.head.appendChild(style);
-		}
-
-		if (animationType === "off") {
-			style.textContent = "";
-			return;
-		}
-
-		const opacityHex = Math.round(opacity * 2.55)
-			.toString(16)
-			.padStart(2, "0");
-		const colorWithOpacity = color + opacityHex;
-
-		let animationCss = "";
+		const style = document.createElement("style");
 		switch (animationType) {
 			case "pulse":
 				animationCss = `
-          @keyframes neonAnimation {
-            0%,100% { transform: scale(1); }
-            50% { transform: scale(${1 + level / 100}); }
-          }
-          .neonText__exampleText {
-            animation: neonAnimation ${time}s infinite;
-          }
-        `;
+      @keyframes neonAnimation {
+        0%,100% { transform: scale(1);  }
+        50% { transform: scale(${1 + level / 100}); }
+       
+      }
+      .neonText__exampleText {
+        animation: neonAnimation ${time}s infinite;
+      }
+    `;
+				style.textContent = animationCss;
 				break;
 			case "sharp":
-				let sharpShadowCss = "";
+				let shadowCss = "";
 				for (let i = 5; i <= 20; i *= 2) {
-					sharpShadowCss += `0 0 ${(i / 50) * blur}px #fff,`;
+					shadowCss += `0 0 ${(i / 50) * blur}px #fff,`;
 				}
 				for (let i = 20; i <= 40 + 10 * size; i += 10) {
-					sharpShadowCss += `0 0 ${(i / 50) * blur}px ${colorWithOpacity},`;
+					shadowCss += `0 0 ${(i / 50) * blur}px ${
+						color +
+						Math.round(opacity * 2.55)
+							.toString(16)
+							.padStart(2, "0")
+					},`;
 				}
-				sharpShadowCss = sharpShadowCss.slice(0, -1);
-
-				const sharpEndPercent = Math.min(41 + Math.round(30 / time) / 10, 100);
-				const sharpMiddlePercent = Math.round(41 + Math.min(18 / time, 10)) + Math.min(Math.round(30 / time) / 10, 1);
-
+				console.log(41 + Math.min(Math.round(30 / time) / 10, 1));
+				shadowCss = shadowCss.slice(0, -1);
 				animationCss = `
-          @keyframes neonAnimation {
-            0%,40%,${sharpEndPercent}%,${sharpMiddlePercent}%,100% {
-              text-shadow: ${sharpShadowCss}
-            }
-            41%,${Math.round(41 + Math.min(18 / time, 10))}% {
-              text-shadow: none
-            }
-          }
-          .neonText__exampleText {
-            transition: 0s;
-            animation: neonAnimation ${time}s step-end infinite;
-          }
-        `;
+      @keyframes neonAnimation {
+      0%,40%,${41 + Math.min(Math.round(30 / time) / 10, 1)}%,${Math.round(41 + Math.min(18 / time, 10)) + Math.min(Math.round(30 / time) / 10, 1)}%,100%   { text-shadow: ${shadowCss}}
+	  41%,${Math.round(41 + Math.min(18 / time, 10))}% { text-shadow: none }
+    
+    
+	
+      }
+      .neonText__exampleText {
+	  transition:0s;
+    animation: neonAnimation ${time}s step-end infinite;
+      }
+    `;
+				style.textContent = animationCss;
 				break;
 			case "smooth":
-				let initialShadowCss = "";
+				let inithialShadowCss = "";
 				for (let i = 5; i <= 20; i *= 2) {
-					initialShadowCss += `0 0 ${(i / 50) * blur + level / 10}px #fff,`;
+					inithialShadowCss += `0 0 ${(i / 50) * blur + level / 10}px #fff,`;
 				}
 				for (let i = 20; i <= 40 + 10 * size; i += 10) {
-					initialShadowCss += `0 0 ${(i / 50) * blur}px ${colorWithOpacity},`;
+					inithialShadowCss += `0 0 ${(i / 50) * blur}px ${
+						color +
+						Math.round(opacity * 2.55)
+							.toString(16)
+							.padStart(2, "0")
+					},`;
 				}
-				initialShadowCss = initialShadowCss.slice(0, -1);
-
 				let endShadowCss = "";
 				for (let i = 5; i <= 20; i *= 2) {
 					endShadowCss += `0 0 ${(i / 50) * blur}px #fff,`;
 				}
 				for (let i = 20; i <= 40 + 10 * size; i += 10) {
-					endShadowCss += `0 0 ${(i / 50) * blur + level / 4}px ${colorWithOpacity},`;
+					endShadowCss += `0 0 ${(i / 50) * blur + level / 4}px ${
+						color +
+						Math.round(opacity * 2.55)
+							.toString(16)
+							.padStart(2, "0")
+					},`;
 				}
+				inithialShadowCss = inithialShadowCss.slice(0, -1);
 				endShadowCss = endShadowCss.slice(0, -1);
 
 				animationCss = `
-          @keyframes neonAnimation {
-            0%,100% { text-shadow: ${initialShadowCss}}
-            40% { text-shadow: ${endShadowCss} }
-          }
-          .neonText__exampleText {
-            animation: neonAnimation ${time}s infinite;
-          }
-        `;
+      @keyframes neonAnimation {
+        0%,100% { text-shadow: ${inithialShadowCss}}
+        40% { text-shadow: ${endShadowCss} }
+       
+      }
+      .neonText__exampleText {
+        animation: neonAnimation ${time}s infinite;
+      }
+    `;
+				style.textContent = animationCss;
 				break;
 			default:
 				break;
 		}
 
-		style.textContent = animationCss;
-	}, [time, level, animationType, blur, size, color, opacity]);
+		document.head.appendChild(style);
 
-	// Оптимизированные обработчики изменений
-	const handleNumberInputChange = useCallback((value: string, setter: (value: number) => void, max: number, min: number = 0) => {
-		const numValue = parseFloat(value);
-		if (!isNaN(numValue)) {
-			setter(Math.max(min, Math.min(numValue, max)));
+		return () => {
+			// Очистка при размонтировании
+			document.head.removeChild(style);
+		};
+	}, [time, level, animationType, blur, size, color, opacity, copied]);
+	let shadowCss = "";
+	if (animationType == "off" || animationType == "pulse") {
+		for (let i = 5; i <= 20; i *= 2) {
+			shadowCss += `0 0 ${Math.round((i / 5) * blur) / 10}px #fff,`;
 		}
-	}, []);
-
-	const handleSliderChange = useCallback((value: number | number[], setter: (value: number) => void) => {
-		setter(typeof value === "number" ? value : value[0]);
-	}, []);
-
-	const handleCopyCss = useCallback(() => {
-		let copyText = "";
-		if (animationType === "off") {
-			copyText = `text-shadow: ${shadowCss};`;
-		} else {
-			const styleElement = document.getElementById("neon-animation-style");
-			if (styleElement) {
-				copyText = styleElement.textContent?.replace(".neonText__exampleText {", ".neon-text {")?.replace("text-shadow: none", "") || "";
-			}
+		for (let i = 20; i <= 40 + 10 * size; i += 10) {
+			shadowCss += `0 0 ${Math.round((i / 5) * blur) / 10}px ${
+				color +
+				Math.round(opacity * 2.55)
+					.toString(16)
+					.padStart(2, "0")
+			},`;
 		}
-
-		navigator.clipboard.writeText(copyText).then(() => {
-			setCopied(true);
-			setTimeout(() => setCopied(false), 2000);
-		});
-	}, [animationType, shadowCss, setCopied]);
-
+		shadowCss = shadowCss.slice(0, -1);
+	}
 	return (
 		<div className="conteiner">
-			<div className="neonText">
-				<Card className="neonText__box">
+			<div className="neonText main">
+				<Card className="box">
 					<div className="neonText__example">
-						<p
-							className="neonText__exampleText"
-							style={{
-								textShadow: shadowCss,
-								animationPlayState: animationType === "off" ? "paused" : "running",
-							}}
-						>
+						<p className="neonText__exampleText" style={{ textShadow: shadowCss }}>
 							Neon text
 						</p>
 					</div>
 				</Card>
-
-				<Card className="neonText__settings">
-					{/* Blur Slider */}
+				<Card className="settings">
 					<Slider
-						classNames={{ base: "max-w-md", label: "text-medium" }}
+						classNames={{
+							base: "max-w-md",
+							label: "text-medium",
+						}}
 						label="Blur"
 						maxValue={100}
 						minValue={0}
@@ -196,20 +172,33 @@ function NeonText() {
 									className="neonText__numberBox"
 									type="number"
 									value={blur}
-									onChange={(e) => handleNumberInputChange(e.target.value, setBlur, 100)}
-									onKeyDown={(e) => e.key === "Enter" && setBlur(blur)}
+									onChange={(e) => {
+										const v = parseFloat(e.target.value);
+										if (v <= 100) setBlur(v);
+										if (v > 100) setBlur(100);
+										if (v < 0) setBlur(0);
+										if (Number.isNaN(v)) setBlur(0);
+									}}
+									onKeyDown={(e) => {
+										if (e.key === "Enter" && !isNaN(Number(blur))) {
+											setBlur(Number(blur));
+										}
+									}}
 								/>
 							</output>
 						)}
 						size="md"
 						step={1}
 						value={blur}
-						onChange={(value) => handleSliderChange(value, setBlur)}
+						onChange={(e) => {
+							setBlur(typeof e == "number" ? e : e[0]);
+						}}
 					/>
-
-					{/* Size Slider */}
 					<Slider
-						classNames={{ base: "max-w-md", label: "text-medium" }}
+						classNames={{
+							base: "max-w-md",
+							label: "text-medium",
+						}}
 						label="Size"
 						maxValue={10}
 						minValue={0}
@@ -222,66 +211,129 @@ function NeonText() {
 									className="neonText__numberBox"
 									type="number"
 									value={size}
-									onChange={(e) => handleNumberInputChange(e.target.value, setSize, 10)}
-									onKeyDown={(e) => e.key === "Enter" && setSize(size)}
+									onChange={(e) => {
+										const v = parseFloat(e.target.value);
+										if (v <= 10) setSize(v);
+										if (v > 10) setSize(10);
+										if (v < 0) setSize(0);
+										if (Number.isNaN(v)) setSize(0);
+									}}
+									onKeyDown={(e) => {
+										if (e.key === "Enter" && !isNaN(Number(size))) {
+											setSize(Number(size));
+										}
+									}}
 								/>
 							</output>
 						)}
 						size="md"
 						step={1}
 						value={size}
-						onChange={(value) => handleSliderChange(value, setSize)}
+						onChange={(e) => {
+							setSize(typeof e == "number" ? e : e[0]);
+						}}
 					/>
 
-					{/* Color Block */}
 					<div className="neonText__colorBlock">
-						<input type="color" onChange={(e) => setColor(e.target.value)} value={color} className="neonText__color" />
-						<input type="text" onChange={(e) => setColor(e.target.value)} value={color} className="neonText__colorCode" />
-						<Slider value={opacity} onChange={(value) => handleSliderChange(value, setOpacity)} aria-label="Opacity" className="max-w-md neonText__opacitySlider" maxValue={100} minValue={0} size="sm" step={1} />
-						<input max={100} min={0} aria-label="Opacity value" className="neonText__opacity" type="number" value={opacity} onChange={(e) => handleNumberInputChange(e.target.value, setOpacity, 100)} />
+						<input
+							type="color"
+							onChange={(e) => {
+								setColor(e.target.value);
+								console.log(e.target.value);
+							}}
+							value={color}
+							className="neonText__color"
+						/>
+						<input
+							type="text"
+							onChange={(e) => {
+								setColor(e.target.value);
+							}}
+							value={color}
+							className="neonText__colorCode"
+						/>
+						<Slider
+							value={opacity}
+							onChange={(e) => {
+								setOpacity(typeof e == "number" ? e : e[0]);
+							}}
+							aria-label="Opacity"
+							className="max-w-md neonText__opacitySlider"
+							maxValue={100}
+							minValue={0}
+							size="sm"
+							step={1}
+						/>
+						<input
+							max={100}
+							min={0}
+							aria-label="Opacity value"
+							className="neonText__opacity"
+							type="number"
+							value={opacity}
+							onChange={(e) => {
+								const v = parseFloat(e.target.value);
+								if (v <= 100) setOpacity(v);
+								if (v > 100) setOpacity(100);
+								if (v < 0) setOpacity(0);
+								if (Number.isNaN(v)) setOpacity(0);
+							}}
+						/>
 					</div>
-
-					{/* Animation Tabs */}
 					<p className="neonText__text">Animation</p>
-					<Tabs selectedKey={animationType} className="neonText__tabs" onChange={(key) => setAnimationType(key as any)}>
-						<Tab key="off" title="Off" />
-						<Tab key="smooth" title="Smooth" />
-						<Tab key="sharp" title="Sharp" />
-						<Tab key="pulse" title="Pulse" />
+					<Tabs selectedKey={animationType} className="neonText__tabs">
+						<Tab key={"off"} onClick={() => setAnimationType("off")} title="Off"></Tab>
+						<Tab key={"smooth"} onClick={() => setAnimationType("smooth")} title="Smooth"></Tab>
+						<Tab key={"sharp"} onClick={() => setAnimationType("sharp")} title="Sharp"></Tab>
+						<Tab key={"pulse"} onClick={() => setAnimationType("pulse")} title="Pulse"></Tab>
 					</Tabs>
-
-					{/* Time Slider */}
 					<Slider
-						classNames={{ base: "max-w-md", label: "text-medium" }}
+						classNames={{
+							base: "max-w-md",
+							label: "text-medium",
+						}}
 						label="Time"
-						isDisabled={animationType === "off"}
+						isDisabled={animationType == "off"}
 						maxValue={10}
-						minValue={0.1}
+						minValue={0}
 						renderValue={({ children, ...props }) => (
 							<output {...props}>
 								<input
 									max={10}
-									min={0.1}
-									step={0.1}
+									min={0}
 									aria-label="Time value"
 									className="neonText__numberBox"
 									type="number"
 									value={time}
-									onChange={(e) => handleNumberInputChange(e.target.value, setTime, 10, 0.1)}
-									onKeyDown={(e) => e.key === "Enter" && setTime(time)}
+									onChange={(e) => {
+										const v = parseFloat(e.target.value);
+										if (v <= 10) setTime(v);
+										if (v > 10) setTime(10);
+										if (v < 0) setTime(0);
+										if (Number.isNaN(v)) setTime(0);
+									}}
+									onKeyDown={(e) => {
+										if (e.key === "Enter" && !isNaN(Number(time))) {
+											setTime(Number(time));
+										}
+									}}
 								/>
 							</output>
 						)}
 						size="md"
 						step={0.1}
 						value={time}
-						onChange={(value) => handleSliderChange(value, setTime)}
-					/>
+						onChange={(e) => {
+							setTime(typeof e == "number" ? e : e[0]);
+						}}
+					></Slider>
 
-					{/* Level Slider */}
 					<Slider
-						classNames={{ base: "max-w-md", label: "text-medium" }}
-						isDisabled={animationType === "off" || animationType === "sharp"}
+						classNames={{
+							base: "max-w-md",
+							label: "text-medium",
+						}}
+						isDisabled={animationType == "off" || animationType == "sharp"}
 						label="Level"
 						maxValue={100}
 						minValue={0}
@@ -294,23 +346,55 @@ function NeonText() {
 									className="neonText__numberBox"
 									type="number"
 									value={level}
-									onChange={(e) => handleNumberInputChange(e.target.value, setLevel, 100)}
-									onKeyDown={(e) => e.key === "Enter" && setLevel(level)}
+									onChange={(e) => {
+										const v = parseFloat(e.target.value);
+										if (v <= 100) setLevel(v);
+										if (v > 100) setLevel(100);
+										if (v < 0) setLevel(0);
+										if (Number.isNaN(v)) setLevel(0);
+									}}
+									onKeyDown={(e) => {
+										if (e.key === "Enter" && !isNaN(Number(level))) {
+											setLevel(Number(level));
+										}
+									}}
 								/>
 							</output>
 						)}
 						size="md"
 						step={1}
 						value={level}
-						onChange={(value) => handleSliderChange(value, setLevel)}
-					/>
-
-					{/* Action Buttons */}
-					<Button onClick={handleCopyCss} color="primary" className="gradient__copyButton" variant="solid">
+						onChange={(e) => {
+							setLevel(typeof e == "number" ? e : e[0]);
+						}}
+					></Slider>
+					<Button
+						onClick={() => {
+							let copyText = "";
+							if (animationType == "off") {
+								copyText = "text-shadow: " + shadowCss + ";";
+							} else {
+								copyText = animationCss.replace(".neonText__exampleText {", ".NeonText {" + shadowCss);
+								console.log(copyText);
+							}
+							navigator.clipboard.writeText(copyText).then(() => {
+								setCopied(true);
+								setTimeout(() => setCopied(false), 2000);
+							});
+						}}
+						color="primary"
+						className="neonText__copyButton"
+						variant="solid"
+					>
 						Copy CSS
 					</Button>
-
-					<Button size="md" className="neonText__randomizeButton" onClick={randomizeValues}>
+					<Button
+						size="md"
+						className="neonText__randomizeButton"
+						onClick={() => {
+							randomizeValues();
+						}}
+					>
 						Randomize
 					</Button>
 				</Card>

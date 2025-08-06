@@ -12,8 +12,22 @@
 		font-size: 30px;
 	}
 	&__tabs {
-		position: absolute;
-		top: 10px;
-		right: 100px;
+		// position: absolute;
+		// top: 10px;
+		// right: 100px;
+	}
+	&__wrapper {
+		display: flex;
+		justify-content: space-between;
+	}
+	&__logo {
+		width: 40px;
+		height: 40px;
+		margin-right: 10px;
+	}
+	&__name {
+		width: 460px;
+
+		display: flex;
 	}
 }
