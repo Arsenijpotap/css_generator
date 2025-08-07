@@ -1,182 +1,21 @@
 /** @format */
 
-.gradient {
+.borderRadius {
 	margin-top: 150px;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
 	&__example {
-		width: 100%;
-		height: 100%;
-		background-image: linear-gradient(20deg, #ccff00, green);
-		border-radius: 10px;
+		background-color: hsl(var(--heroui-default-100) / 1);
+		border: 2px solid color-mix(in oklab, hsl(var(--heroui-default-300) / 1) 90%, transparent);
+		width: 300px;
+		height: 300px;
+		border-radius: 40px;
 	}
 
-	&__tabs {
-		margin-bottom: 10px;
-	}
-	&__degrees {
-		// margin-right: 10px;
-		width: calc(var(--spacing) * 16); /* w-12 */
-		padding-inline: calc(var(--spacing) * 1); /* px-1 */
-		padding-block: calc(var(--spacing) * 0.5); /* py-0.5 */
-		text-align: right; /* text-right */
-
-		font-size: var(--heroui-font-size-small); /* text-small */
-		line-height: var(--heroui-line-height-small); /* text-small */
-		color: hsl(var(--heroui-default-700) / 1); /* text-default-700 */
-		font-weight: var(--font-weight-medium); /* font-medium */
-
-		background-color: hsl(var(--heroui-default-100) / 1); /* bg-default-100 */
-		border-radius: var(--heroui-radius-small); /* rounded-small */
-		border-width: var(--heroui-border-width-medium); /* border-medium */
-		border-style: var(--tw-border-style);
-		border-color: transparent; /* border-transparent */
-
-		outline-style: solid; /* outline-solid */
-		outline-color: transparent; /* outline-transparent */
-
-		transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
-		transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-		transition-duration: var(--tw-duration, var(--default-transition-duration)); /* transition-colors */
-		&:hover {
-			border-color: hsl(var(--heroui-primary) / 1); /* hover:border-primary (предполагаемое значение) */
-		}
-
-		&:focus {
-			border-color: hsl(var(--heroui-primary) / 1); /* focus:border-primary */
-		}
-	}
-	&__range {
-		border-radius: var(--radius-md);
-		font-size: var(--heroui-font-size-tiny);
-		line-height: var(--heroui-line-height-tiny);
-		color: hsl(var(--heroui-default-500) / 1);
-	}
-	&__colorBlocks {
+	& > .box {
 		display: flex;
-		flex-direction: column;
-		justify-content: start;
+		justify-content: center;
 		align-items: center;
-		margin-top: 10px;
-		height: 220px;
-		overflow: auto;
-		scrollbar-width: none;
-		-ms-overflow-style: none;
-
-		&::-webkit-scrollbar {
-			display: none;
-			width: 0;
-			height: 0;
-		}
 	}
-	&__positionSlider {
-		margin: 0 5px;
-		max-width: 160px;
-	}
-	&__colorBlock {
-		height: 40px;
-		width: 380px;
-		display: flex;
-		align-items: center;
-		// gap: 10px;
-		border-bottom: 1px solid hsl(var(--heroui-default-100) / 1);
-
-		&:last-child {
-			border-bottom: none;
-		}
-	}
-
-	&__colorCode {
-		width: calc(var(--spacing) * 19); /* w-12 */
-		padding-inline: calc(var(--spacing) * 1); /* px-1 */
-		padding-block: calc(var(--spacing) * 0.5); /* py-0.5 */
-		text-align: right; /* text-right */
-
-		font-size: var(--heroui-font-size-small); /* text-small */
-		line-height: var(--heroui-line-height-small); /* text-small */
-		color: hsl(var(--heroui-default-700) / 1); /* text-default-700 */
-		font-weight: var(--font-weight-medium); /* font-medium */
-
-		background-color: hsl(var(--heroui-default-100) / 1); /* bg-default-100 */
-		border-radius: var(--heroui-radius-small); /* rounded-small */
-		border-width: var(--heroui-border-width-medium); /* border-medium */
-		border-style: var(--tw-border-style);
-		border-color: transparent; /* border-transparent */
-
-		outline-style: solid; /* outline-solid */
-		outline-color: transparent; /* outline-transparent */
-
-		transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
-		transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-		transition-duration: var(--tw-duration, var(--default-transition-duration)); /* transition-colors */
-		&:hover {
-			border-color: hsl(var(--heroui-primary) / 1); /* hover:border-primary (предполагаемое значение) */
-		}
-
-		&:focus {
-			border-color: hsl(var(--heroui-primary) / 1); /* focus:border-primary */
-		}
-
-		margin-left: 7px;
-		text-align: center;
-	}
-	&__color {
-		// display: block;
-		width: 36px;
-		height: 38px;
-		// outline: 1px solid black;
-		// outline: none;
-	}
-	&__addColorBox {
-		height: 28px;
-	}
-	&__crossButton {
-		margin-left: 5px;
-		border-radius: var(--heroui-radius-small);
-		width: 28px;
-		height: 28px;
-		font-size: 18px;
-		background-color: hsl(var(--heroui-default-100) / 1);
-		color: hsl(var(--heroui-default-700) / 1);
-	}
-	&__addColorButton {
-		border-radius: var(--heroui-radius-small);
-		width: 28px;
-		height: 28px;
-		font-size: 18px;
-		margin-top: 5px;
-		background-color: hsl(var(--heroui-default-100) / 1);
-		color: hsl(var(--heroui-default-700) / 1);
-		// margin: auto;
-	}
-	&__copyButton {
-		position: absolute;
-		left: 10px;
-		bottom: 10px;
-	}
-	&__randomizeButton {
-		position: absolute;
-		right: 10px;
-		bottom: 10px;
-		background-color: hsl(var(--heroui-default-100) / 1);
-		color: hsl(var(--heroui-default-700) / 1);
-		&:hover {
-			// color: #b2b2b7;
-		}
-	}
-}
-
-input[type="number"]::-webkit-inner-spin-button {
-	margin-left: 6px; /* Отступ между числом и стрелками */
-	opacity: 1; /* Делаем стрелки видимыми */
-}
-
-input[type="number"] {
-	padding-right: 6px; /* Отступ справа для стрелок */
-	-moz-appearance: textfield; /* Убираем стандартные стрелки */
-}
-
-input[type="number"]::-ms-clear {
-	display: none; /* Скрываем крестик очистки */
 }

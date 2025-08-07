@@ -13,7 +13,9 @@ export default function BorderRadius() {
 	return (
 		<div className="conteiner">
 			<div className="borderRadius main">
-				<Card className="box">rrrr</Card>
+				<Card className="box">
+					<div className="borderRadius__example"></div>
+				</Card>
 				<Card className="settings"></Card>
 			</div>
 		</div>

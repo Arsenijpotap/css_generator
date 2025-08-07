@@ -304,6 +304,7 @@ function NeonText() {
 									aria-label="Time value"
 									className="neonText__numberBox"
 									type="number"
+									step={0.1}
 									value={time}
 									onChange={(e) => {
 										const v = parseFloat(e.target.value);

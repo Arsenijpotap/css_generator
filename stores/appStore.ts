@@ -8,6 +8,9 @@ interface AppStore {
 
 	copied: boolean;
 	setCopied: (val: boolean) => void;
+
+	theme: "light" | "dark" | "system";
+	setTheme: (val: "light" | "dark" | "system") => void;
 }
 
 const useAppStore = create<AppStore>()((set) => ({
@@ -20,5 +23,8 @@ const useAppStore = create<AppStore>()((set) => ({
 
 	copied: false,
 	setCopied: (value) => set((state) => ({ copied: value })),
+
+	theme: "system",
+	setTheme: (value) => set((state) => ({ theme: value })),
 }));
 export default useAppStore;

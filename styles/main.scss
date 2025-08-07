@@ -26,3 +26,16 @@
 	justify-content: space-around;
 	align-items: center;
 }
+input[type="number"]::-webkit-inner-spin-button {
+	margin-left: 6px; /* Отступ между числом и стрелками */
+	opacity: 1; /* Делаем стрелки видимыми */
+}
+
+input[type="number"] {
+	padding-right: 6px; /* Отступ справа для стрелок */
+	-moz-appearance: textfield; /* Убираем стандартные стрелки */
+}
+
+input[type="number"]::-ms-clear {
+	display: none; /* Скрываем крестик очистки */
+}
