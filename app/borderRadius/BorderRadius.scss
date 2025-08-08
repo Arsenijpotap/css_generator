@@ -18,4 +18,30 @@
 		justify-content: center;
 		align-items: center;
 	}
+	&__avatar {
+		filter: contrast(200%);
+		width: 40px;
+		height: 40px;
+	}
+	&__wrapper {
+		margin-bottom: 10px;
+		gap: 20px;
+		display: flex;
+	}
+	&__select {
+		height: 48px;
+	}
+	&__tab {
+		margin: 2px;
+	}
+	&__line {
+		// padding: 5px;
+		border-bottom: 1px solid hsl(var(--heroui-default-100) / 1);
+	}
+	&__tabs {
+		height: 48px;
+	}
+	&__radiusBlock {
+		padding: 5px 0;
+	}
 }

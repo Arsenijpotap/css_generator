@@ -8,6 +8,7 @@ import { Card } from "@heroui/card";
 import { Tab, Tabs } from "@heroui/tabs";
 import { Slider } from "@heroui/slider";
 import { Button } from "@heroui/button";
+import { addToast } from "@heroui/toast";
 import useGradientStore from "@/stores/gradientStore";
 import { useEffect, useRef, useState } from "react";
 import useAppStore from "@/stores/appStore";
@@ -163,15 +164,33 @@ export default function Gradient() {
 						</div>
 					</div>
 					<Button
-						onClick={() => {
-							navigator.clipboard.writeText(`background-image: ${type}-gradient(${type == "linear" ? degrees + "deg," : ""} ${colorsCss});`).then(() => {
-								setCopied(true);
-								setTimeout(() => setCopied(false), 2000);
-							});
-						}}
 						color="primary"
 						className="gradient__copyButton"
 						variant="solid"
+						onPress={() => {
+							navigator.clipboard
+								.writeText(`background-image: ${type}-gradient(${type == "linear" ? degrees + "deg," : ""} ${colorsCss});`)
+
+								.then(() => {
+									setCopied(true);
+									setTimeout(() => setCopied(false), 2000);
+
+									addToast({
+										color: "success",
+										title: "Copied successfully!",
+										description: "Code has been copied to clipboard.",
+									});
+								})
+								.catch((err) => {
+									console.error("Failed to copy: ", err);
+
+									addToast({
+										color: "danger",
+										title: "Copy failed",
+										description: "Could not copy to clipboard.",
+									});
+								});
+						}}
 					>
 						Copy CSS
 					</Button>

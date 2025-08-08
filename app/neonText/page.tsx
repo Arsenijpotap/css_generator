@@ -10,6 +10,7 @@ import { Button } from "@heroui/button";
 import { Tab, Tabs } from "@heroui/react";
 import { useEffect, useState } from "react";
 import useAppStore from "@/stores/appStore";
+import { addToast } from "@heroui/toast";
 
 function NeonText() {
 	const blur = useNeonTextStore((state) => state.blur);
@@ -370,7 +371,10 @@ function NeonText() {
 						}}
 					></Slider>
 					<Button
-						onClick={() => {
+						color="primary"
+						className="neonText__copyButton"
+						variant="solid"
+						onPress={() => {
 							let copyText = "";
 							if (animationType == "off") {
 								copyText = "text-shadow: " + shadowCss + ";";
@@ -378,14 +382,28 @@ function NeonText() {
 								copyText = animationCss.replace(".neonText__exampleText {", ".NeonText {" + shadowCss);
 								console.log(copyText);
 							}
-							navigator.clipboard.writeText(copyText).then(() => {
-								setCopied(true);
-								setTimeout(() => setCopied(false), 2000);
-							});
+							navigator.clipboard
+								.writeText(copyText)
+								.then(() => {
+									setCopied(true);
+									setTimeout(() => setCopied(false), 2000);
+
+									addToast({
+										color: "success",
+										title: "Copied successfully!",
+										description: "Code has been copied to clipboard.",
+									});
+								})
+								.catch((err) => {
+									console.error("Failed to copy: ", err);
+
+									addToast({
+										color: "danger",
+										title: "Copy failed",
+										description: "Could not copy to clipboard.",
+									});
+								});
 						}}
-						color="primary"
-						className="neonText__copyButton"
-						variant="solid"
 					>
 						Copy CSS
 					</Button>

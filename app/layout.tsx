@@ -7,6 +7,7 @@ import Header from "../components/Header/Header";
 import { HeroUIProvider } from "@heroui/system";
 import { Providers } from "./providers";
 import { ThemeProvider } from "next-themes";
+import { ToastProvider } from "@heroui/toast";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
