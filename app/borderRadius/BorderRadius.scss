@@ -6,6 +6,7 @@
 	justify-content: space-around;
 	align-items: center;
 	&__example {
+		// transition: 0.5s;
 		background-color: hsl(var(--heroui-default-100) / 1);
 		border: 2px solid color-mix(in oklab, hsl(var(--heroui-default-300) / 1) 90%, transparent);
 		width: 300px;
@@ -38,10 +39,65 @@
 		// padding: 5px;
 		border-bottom: 1px solid hsl(var(--heroui-default-100) / 1);
 	}
+	&__box {
+		display: flex;
+		align-items: center;
+		height: 40px;
+	}
 	&__tabs {
 		height: 48px;
 	}
 	&__radiusBlock {
+		display: flex;
 		padding: 5px 0;
+	}
+
+	&__slidersWrapper {
+		height: 28px;
+		margin: 0 10px;
+		gap: 10px;
+		display: flex;
+	}
+	&__sliderWrapper {
+		transition: 0.5s;
+		width: 160px;
+		align-items: center;
+		display: flex;
+		gap: 10px;
+	}
+
+	&__firstValue {
+		width: calc(var(--spacing) * 14); /* w-12 */
+		padding-inline: calc(var(--spacing) * 1); /* px-1 */
+		padding-block: calc(var(--spacing) * 0.5); /* py-0.5 */
+		text-align: right; /* text-right */
+
+		font-size: var(--heroui-font-size-small); /* text-small */
+		line-height: var(--heroui-line-height-small); /* text-small */
+		color: hsl(var(--heroui-default-700) / 1); /* text-default-700 */
+		font-weight: var(--font-weight-medium); /* font-medium */
+
+		background-color: hsl(var(--heroui-default-100) / 1); /* bg-default-100 */
+		border-radius: var(--heroui-radius-small); /* rounded-small */
+		border-width: var(--heroui-border-width-medium); /* border-medium */
+		border-style: var(--tw-border-style);
+		border-color: transparent; /* border-transparent */
+
+		outline-style: solid; /* outline-solid */
+		outline-color: transparent; /* outline-transparent */
+
+		transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+		transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+		transition-duration: var(--tw-duration, var(--default-transition-duration)); /* transition-colors */
+		&:hover {
+			border-color: hsl(var(--heroui-primary) / 1); /* hover:border-primary (предполагаемое значение) */
+		}
+
+		&:focus {
+			border-color: hsl(var(--heroui-primary) / 1); /* focus:border-primary */
+		}
+	}
+	&__firstValueSlider {
+		width: 100%;
 	}
 }
