@@ -145,7 +145,7 @@ export default function Gradient() {
 								<button
 									className="gradient__crossButton"
 									onClick={() => {
-										deleteColor(id);
+										if (colorsList.length > 1) deleteColor(id);
 									}}
 								>
 									×
