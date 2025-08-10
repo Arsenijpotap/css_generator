@@ -37,14 +37,20 @@ interface BorderRadiusStore {
 }
 
 const linkScheme = {
-	off: [],
+	off: [["top-right"], ["top-left"], ["bottom-left"], ["bottom-right"]],
 	all: [["top-right", "top-left", "bottom-left", "bottom-right"]],
 	horizontal: [
 		["top-right", "top-left"],
 		["bottom-left", "bottom-right"],
 	],
-	diagonal: [],
-	vertical: [],
+	diagonal: [
+		["top-right", "bottom-left"],
+		["top-left", "bottom-right"],
+	],
+	vertical: [
+		["top-right", "bottom-right"],
+		["bottom-left", "top-left"],
+	],
 };
 
 const useBorderRadiusStore = create<BorderRadiusStore>()((set) => ({
