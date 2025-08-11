@@ -39,3 +39,18 @@ input[type="number"] {
 input[type="number"]::-ms-clear {
 	display: none; /* Скрываем крестик очистки */
 }
+.copyButton {
+	position: absolute;
+	left: 10px;
+	bottom: 10px;
+}
+.randomizeButton {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	background-color: hsl(var(--heroui-default-100) / 1);
+	color: hsl(var(--heroui-default-700) / 1);
+	&:hover {
+		// color: #b2b2b7;
+	}
+}
