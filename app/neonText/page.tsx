@@ -372,7 +372,7 @@ function NeonText() {
 					></Slider>
 					<Button
 						color="primary"
-						className="neonText__copyButton"
+						className="copyButton"
 						variant="solid"
 						onPress={() => {
 							let copyText = "";
@@ -409,7 +409,7 @@ function NeonText() {
 					</Button>
 					<Button
 						size="md"
-						className="neonText__randomizeButton"
+						className="randomizeButton"
 						onClick={() => {
 							randomizeValues();
 						}}

@@ -8,7 +8,9 @@ import { Card } from "@heroui/card";
 import { Select, SelectItem } from "@heroui/select";
 import { Tabs, Tab } from "@heroui/tabs";
 import { Switch } from "@heroui/switch";
+import { Button } from "@heroui/button";
 import { Slider } from "@heroui/slider";
+import { addToast } from "@heroui/toast";
 import useGradientStore from "@/stores/gradientStore";
 import off from "@/public/images/off.png";
 import hor from "@/public/images/hor.png";
@@ -18,6 +20,7 @@ import diag from "@/public/images/diag.png";
 import border from "@/public/images/border.png";
 import Image from "next/image";
 import useBorderRadiusStore from "@/stores/borderRadiusStore";
+import useAppStore from "@/stores/appStore";
 
 export const linkTypes = [
 	{
@@ -53,6 +56,10 @@ export default function BorderRadius() {
 		["bottom", "right"],
 		["bottom", "left"],
 	];
+
+	const copied = useAppStore((state) => state.copied);
+	const setCopied = useAppStore((state) => state.setCopied);
+
 	const unit = useBorderRadiusStore((state) => state.unit);
 	const setUnit = useBorderRadiusStore((state) => state.setUnit);
 	const radiusValues = useBorderRadiusStore((state) => state.radiusValues);
@@ -287,6 +294,39 @@ export default function BorderRadius() {
 							</div>
 						);
 					})}
+					<Button
+						color="primary"
+						className="copyButton"
+						variant="solid"
+						onPress={() => {
+							navigator.clipboard
+								.writeText("	border-radius: " + borderRadiusCss + ";")
+								.then(() => {
+									setCopied(true);
+									setTimeout(() => setCopied(false), 2000);
+
+									addToast({
+										color: "success",
+										title: "Copied successfully!",
+										description: "Code has been copied to clipboard.",
+									});
+								})
+								.catch((err) => {
+									console.error("Failed to copy: ", err);
+
+									addToast({
+										color: "danger",
+										title: "Copy failed",
+										description: "Could not copy to clipboard.",
+									});
+								});
+						}}
+					>
+						Copy CSS
+					</Button>
+					<Button size="md" className="randomizeButton" onClick={() => {}}>
+						Randomize
+					</Button>
 				</Card>
 			</div>
 		</div>

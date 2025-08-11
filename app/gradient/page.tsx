@@ -165,7 +165,7 @@ export default function Gradient() {
 					</div>
 					<Button
 						color="primary"
-						className="gradient__copyButton"
+						className="copyButton"
 						variant="solid"
 						onPress={() => {
 							navigator.clipboard
@@ -196,7 +196,7 @@ export default function Gradient() {
 					</Button>
 					<Button
 						size="md"
-						className="gradient__randomizeButton"
+						className="randomizeButton"
 						onClick={() => {
 							randomizeColors();
 						}}
