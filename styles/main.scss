@@ -3,28 +3,86 @@
 .conteiner {
 	margin: 0 auto;
 	width: 1200px;
+	@media (min-width: 480px) {
+		& {
+			width: 480px;
+		}
+	}
+	@media (min-width: 768px) {
+		& {
+			width: 768px;
+		}
+	}
+	@media (min-width: 1200px) {
+		& {
+			width: 1200px;
+		}
+	}
 }
 .box {
+	position: relative;
+	flex-shrink: 0;
 	border-radius: 20px;
 	padding: 10px;
 	width: 400px;
 	height: 400px;
 	display: block;
+	@media (min-width: 768px) {
+		& {
+			scale: 0.9;
+		}
+	}
+	@media (min-width: 1200px) {
+		& {
+			scale: 1;
+		}
+	}
 }
 
 .settings {
 	position: relative;
+	flex-shrink: 0;
 	border-radius: 20px;
 	padding: 10px;
 	width: 400px;
 	height: 400px;
 	display: block;
+	@media (max-width: 768px) {
+		& {
+			flex-direction: column;
+		}
+	}
+	@media (min-width: 768px) {
+		& {
+			scale: 0.9;
+		}
+	}
+	@media (min-width: 1200px) {
+		& {
+			scale: 1;
+		}
+	}
 }
 .main {
-	margin-top: 150px;
+	margin-top: 20vh;
 	display: flex;
-	justify-content: space-around;
+
 	align-items: center;
+	@media (max-width: 768px) {
+		& {
+			flex-direction: column;
+		}
+	}
+	@media (min-width: 768px) {
+		& {
+			justify-content: space-around;
+		}
+	}
+	@media (min-width: 1200px) {
+		& {
+			justify-content: space-around;
+		}
+	}
 }
 input[type="number"]::-webkit-inner-spin-button {
 	margin-left: 6px; /* Отступ между числом и стрелками */
