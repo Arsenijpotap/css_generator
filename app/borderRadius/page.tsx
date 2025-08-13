@@ -69,6 +69,7 @@ export default function BorderRadius() {
 	const linkType = useBorderRadiusStore((state) => state.linkType);
 	const setLinkType = useBorderRadiusStore((state) => state.setLinkType);
 	const updateValues = useBorderRadiusStore((state) => state.updateValues);
+	const randomizeValues = useBorderRadiusStore((state) => state.randomizeValues);
 	let borderRadiusCss = +!isSimmetryActive
 		? "" +
 			radiusValues["top-left"].first +
@@ -295,7 +296,7 @@ export default function BorderRadius() {
 						);
 					})}
 					<CopyButton text={copyText}></CopyButton>
-					<RandomizeButton randomizeFunction={alert}></RandomizeButton>
+					<RandomizeButton randomizeFunction={randomizeValues}></RandomizeButton>
 				</Card>
 			</div>
 		</div>

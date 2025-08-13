@@ -1,6 +1,7 @@
 /** @format */
 
 import colors from "@/constants/colors";
+import { fstat } from "fs";
 import { create } from "zustand";
 
 interface BorderRadiusStore {
@@ -34,6 +35,7 @@ interface BorderRadiusStore {
 	setValue: (pos: "top-right" | "top-left" | "bottom-left" | "bottom-right", value: number) => void;
 	setSplitValues: (pos: "top-right" | "top-left" | "bottom-left" | "bottom-right", firstValue: number, secondValue: number) => void;
 	updateValues: () => void;
+	randomizeValues: () => void;
 }
 
 const linkScheme = {
@@ -133,18 +135,14 @@ const useBorderRadiusStore = create<BorderRadiusStore>()((set) => ({
 	},
 	updateValues: () =>
 		set((state) => {
-			// Создаем копию текущих значений
 			const newRadiusValues = { ...state.radiusValues };
 
-			// Обновляем значения согласно схеме связей
 			linkScheme.all[0].forEach((direction) => {
 				const val1 = state.radiusValues[direction as "top-right" | "top-left" | "bottom-left" | "bottom-right"].first;
 				const val2 = state.radiusValues[direction as "top-right" | "top-left" | "bottom-left" | "bottom-right"].second;
 
-				// Обновляем текущее направление
 				newRadiusValues[direction as "top-right" | "top-left" | "bottom-left" | "bottom-right"] = { first: val1, second: val2 };
 
-				// Обновляем связанные направления
 				linkScheme[state.linkType].forEach((arr) => {
 					if (arr.includes(direction)) {
 						arr.forEach((name) => {
@@ -154,8 +152,17 @@ const useBorderRadiusStore = create<BorderRadiusStore>()((set) => ({
 				});
 			});
 
-			// Возвращаем обновленное состояние
 			return { radiusValues: newRadiusValues };
+		}),
+	randomizeValues: () =>
+		set((state) => {
+			const randomArray = Array.from({ length: 4 }, () => Math.floor(Math.random() * 60));
+			linkScheme.all[0].forEach((name, index) => {
+				if (name == "top-right" || name == "top-left" || name == "bottom-left" || name == "bottom-right") {
+					state.setSplitValues(name, Math.round(randomArray[index] + Math.random() * 40), Math.round(randomArray[index] + Math.random() * 40));
+				}
+			});
+			return {};
 		}),
 }));
 export default useBorderRadiusStore;
