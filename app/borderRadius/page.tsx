@@ -21,6 +21,8 @@ import border from "@/public/images/border.png";
 import Image from "next/image";
 import useBorderRadiusStore from "@/stores/borderRadiusStore";
 import useAppStore from "@/stores/appStore";
+import CopyButton from "@/components/CopyButton/CopyButton";
+import RandomizeButton from "@/components/RandomizeButton/RandomizeButton";
 
 export const linkTypes = [
 	{
@@ -56,9 +58,6 @@ export default function BorderRadius() {
 		["bottom", "right"],
 		["bottom", "left"],
 	];
-
-	const copied = useAppStore((state) => state.copied);
-	const setCopied = useAppStore((state) => state.setCopied);
 
 	const unit = useBorderRadiusStore((state) => state.unit);
 	const setUnit = useBorderRadiusStore((state) => state.setUnit);
@@ -105,9 +104,10 @@ export default function BorderRadius() {
 			index = ind + 1;
 		}
 	});
+	let copyText = "	border-radius: " + borderRadiusCss + ";";
 	return (
 		<div className="conteiner">
-			<div className="borderRadius main">
+			<div className="main borderRadius">
 				<Card className="box">
 					<div className="borderRadius__example" style={{ borderRadius: borderRadiusCss }}></div>
 				</Card>
@@ -294,39 +294,8 @@ export default function BorderRadius() {
 							</div>
 						);
 					})}
-					<Button
-						color="primary"
-						className="copyButton"
-						variant="solid"
-						onPress={() => {
-							navigator.clipboard
-								.writeText("	border-radius: " + borderRadiusCss + ";")
-								.then(() => {
-									setCopied(true);
-									setTimeout(() => setCopied(false), 2000);
-
-									addToast({
-										color: "success",
-										title: "Copied successfully!",
-										description: "Code has been copied to clipboard.",
-									});
-								})
-								.catch((err) => {
-									console.error("Failed to copy: ", err);
-
-									addToast({
-										color: "danger",
-										title: "Copy failed",
-										description: "Could not copy to clipboard.",
-									});
-								});
-						}}
-					>
-						Copy CSS
-					</Button>
-					<Button size="md" className="randomizeButton" onClick={() => {}}>
-						Randomize
-					</Button>
+					<CopyButton text={copyText}></CopyButton>
+					<RandomizeButton randomizeFunction={alert}></RandomizeButton>
 				</Card>
 			</div>
 		</div>
