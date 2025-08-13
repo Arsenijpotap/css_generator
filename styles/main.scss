@@ -38,6 +38,11 @@
 			box-shadow: none;
 		}
 	}
+	@media (max-width: 430px) {
+		& {
+			scale: 0.87;
+		}
+	}
 	@media (min-width: 768px) {
 		& {
 			scale: 0.9;
@@ -62,6 +67,12 @@
 		& {
 			border-radius: 0 0 20px 20px;
 			box-shadow: none;
+		}
+	}
+	@media (max-width: 430px) {
+		& {
+			scale: 0.87;
+			margin-top: -5vh;
 		}
 	}
 	@media (min-width: 768px) {
@@ -119,6 +130,12 @@ input[type="number"]::-ms-clear {
 	position: absolute;
 	left: 10px;
 	bottom: 10px;
+	@media (max-width: 768px) {
+		& {
+			padding-inline: calc(var(--spacing) * 6);
+			font-size: var(--heroui-font-size-medium);
+		}
+	}
 }
 .randomizeButton {
 	position: absolute;
@@ -126,7 +143,17 @@ input[type="number"]::-ms-clear {
 	bottom: 10px;
 	background-color: hsl(var(--heroui-default-100) / 1);
 	color: hsl(var(--heroui-default-700) / 1);
-	&:hover {
-		// color: #b2b2b7;
+	@media (max-width: 768px) {
+		& {
+			padding-inline: calc(var(--spacing) * 6);
+			font-size: var(--heroui-font-size-medium);
+		}
+	}
+}
+html {
+	@media (max-width: 768px) {
+		& {
+			background-color: hsl(var(--heroui-content1) / 1);
+		}
 	}
 }
