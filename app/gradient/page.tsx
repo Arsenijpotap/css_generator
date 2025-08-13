@@ -12,6 +12,8 @@ import { addToast } from "@heroui/toast";
 import useGradientStore from "@/stores/gradientStore";
 import { useEffect, useRef, useState } from "react";
 import useAppStore from "@/stores/appStore";
+import CopyButton from "@/components/CopyButton/CopyButton";
+import RandomizeButton from "@/components/RandomizeButton/RandomizeButton";
 
 export default function Gradient() {
 	const degrees = useGradientStore((state) => state.degrees);
@@ -163,46 +165,9 @@ export default function Gradient() {
 							</button>
 						</div>
 					</div>
-					<Button
-						color="primary"
-						className="copyButton"
-						variant="solid"
-						onPress={() => {
-							navigator.clipboard
-								.writeText(`background-image: ${type}-gradient(${type == "linear" ? degrees + "deg," : ""} ${colorsCss});`)
 
-								.then(() => {
-									setCopied(true);
-									setTimeout(() => setCopied(false), 2000);
-
-									addToast({
-										color: "success",
-										title: "Copied successfully!",
-										description: "Code has been copied to clipboard.",
-									});
-								})
-								.catch((err) => {
-									console.error("Failed to copy: ", err);
-
-									addToast({
-										color: "danger",
-										title: "Copy failed",
-										description: "Could not copy to clipboard.",
-									});
-								});
-						}}
-					>
-						Copy CSS
-					</Button>
-					<Button
-						size="md"
-						className="randomizeButton"
-						onClick={() => {
-							randomizeColors();
-						}}
-					>
-						Randomize
-					</Button>
+					<CopyButton text={`background-image: ${type}-gradient(${type == "linear" ? degrees + "deg," : ""} ${colorsCss});`}></CopyButton>
+					<RandomizeButton randomizeFunction={randomizeColors}></RandomizeButton>
 				</Card>
 			</div>
 		</div>

@@ -3,6 +3,11 @@
 .conteiner {
 	margin: 0 auto;
 	width: 1200px;
+	@media (min-width: 360px) {
+		& {
+			width: 360px;
+		}
+	}
 	@media (min-width: 480px) {
 		& {
 			width: 480px;
@@ -27,6 +32,12 @@
 	width: 400px;
 	height: 400px;
 	display: block;
+	@media (max-width: 768px) {
+		& {
+			border-radius: 20px 20px 0 0;
+			box-shadow: none;
+		}
+	}
 	@media (min-width: 768px) {
 		& {
 			scale: 0.9;
@@ -49,7 +60,8 @@
 	display: block;
 	@media (max-width: 768px) {
 		& {
-			flex-direction: column;
+			border-radius: 0 0 20px 20px;
+			box-shadow: none;
 		}
 	}
 	@media (min-width: 768px) {
@@ -71,6 +83,12 @@
 	@media (max-width: 768px) {
 		& {
 			flex-direction: column;
+			margin-top: 2vh;
+		}
+	}
+	@media (max-width: 360px) {
+		& {
+			margin-top: 1vh;
 		}
 	}
 	@media (min-width: 768px) {

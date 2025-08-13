@@ -11,6 +11,8 @@ import { Tab, Tabs } from "@heroui/react";
 import { useEffect, useState } from "react";
 import useAppStore from "@/stores/appStore";
 import { addToast } from "@heroui/toast";
+import CopyButton from "@/components/CopyButton/CopyButton";
+import RandomizeButton from "@/components/RandomizeButton/RandomizeButton";
 
 function NeonText() {
 	const blur = useNeonTextStore((state) => state.blur);
@@ -144,6 +146,13 @@ function NeonText() {
 			},`;
 		}
 		shadowCss = shadowCss.slice(0, -1);
+	}
+	let copyText = "";
+	if (animationType == "off") {
+		copyText = "text-shadow: " + shadowCss + ";";
+	} else {
+		copyText = animationCss.replace(".neonText__exampleText {", ".NeonText {" + shadowCss);
+		console.log(copyText);
 	}
 	return (
 		<div className="conteiner">
@@ -370,52 +379,8 @@ function NeonText() {
 							setLevel(typeof e == "number" ? e : e[0]);
 						}}
 					></Slider>
-					<Button
-						color="primary"
-						className="copyButton"
-						variant="solid"
-						onPress={() => {
-							let copyText = "";
-							if (animationType == "off") {
-								copyText = "text-shadow: " + shadowCss + ";";
-							} else {
-								copyText = animationCss.replace(".neonText__exampleText {", ".NeonText {" + shadowCss);
-								console.log(copyText);
-							}
-							navigator.clipboard
-								.writeText(copyText)
-								.then(() => {
-									setCopied(true);
-									setTimeout(() => setCopied(false), 2000);
-
-									addToast({
-										color: "success",
-										title: "Copied successfully!",
-										description: "Code has been copied to clipboard.",
-									});
-								})
-								.catch((err) => {
-									console.error("Failed to copy: ", err);
-
-									addToast({
-										color: "danger",
-										title: "Copy failed",
-										description: "Could not copy to clipboard.",
-									});
-								});
-						}}
-					>
-						Copy CSS
-					</Button>
-					<Button
-						size="md"
-						className="randomizeButton"
-						onClick={() => {
-							randomizeValues();
-						}}
-					>
-						Randomize
-					</Button>
+					<CopyButton text={copyText}></CopyButton>
+					<RandomizeButton randomizeFunction={randomizeValues}></RandomizeButton>
 				</Card>
 			</div>
 		</div>
