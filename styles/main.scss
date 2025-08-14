@@ -3,6 +3,11 @@
 .conteiner {
 	margin: 0 auto;
 	width: 1200px;
+	@media (max-width: 360px) {
+		& {
+			width: 100vw;
+		}
+	}
 	@media (min-width: 360px) {
 		& {
 			width: 360px;
