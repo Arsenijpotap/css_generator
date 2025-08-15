@@ -36,8 +36,10 @@ function Header() {
 		<header className="header">
 			<div className="conteiner header__wrapper">
 				<div className="header__name">
-					<PencilRuler className="header__logo" />
-					<h1 className="header__title">Generate your {mode}</h1>
+					<a href="/">
+						<PencilRuler className="header__logo" />
+					</a>
+					<h1 className="header__title">Generate your {pathname != "/" ? mode : "css code"}</h1>
 				</div>
 				<div className="">
 					{/* <Tabs variant="bordered" className="header__themeButtons" selectedKey={theme} size="sm">

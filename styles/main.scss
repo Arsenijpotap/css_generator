@@ -109,12 +109,14 @@
 	}
 	@media (min-width: 768px) {
 		& {
-			justify-content: space-around;
+			justify-content: space-between;
+			margin-left: -15px;
 		}
 	}
 	@media (min-width: 1200px) {
 		& {
-			justify-content: space-around;
+			justify-content: space-between;
+			margin-left: -16px;
 		}
 	}
 }
