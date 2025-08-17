@@ -24,7 +24,7 @@ import useAppStore from "@/stores/appStore";
 import CopyButton from "@/components/CopyButton/CopyButton";
 import RandomizeButton from "@/components/RandomizeButton/RandomizeButton";
 
-export const linkTypes = [
+const linkTypes = [
 	{
 		id: 1,
 		name: "Off",
