@@ -1,5 +1,8 @@
 /** @format */
 
+* {
+	// transition: 1s;
+}
 .conteiner {
 	margin: 0 auto;
 	width: 1200px;
@@ -109,13 +112,13 @@
 	}
 	@media (min-width: 768px) {
 		& {
-			justify-content: space-between;
+			justify-content: space-around;
 			margin-left: -15px;
 		}
 	}
 	@media (min-width: 1200px) {
 		& {
-			justify-content: space-between;
+			justify-content: space-around;
 			margin-left: -16px;
 		}
 	}
