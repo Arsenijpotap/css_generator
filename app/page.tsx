@@ -8,7 +8,7 @@ export default function App() {
 			<div className="conteiner">
 				<div className="home__contentBox">
 					<div className="home__content">
-						<h1 className="home__title">CSS generator</h1>
+						<h1 className="home__title">Generate CSS in a Snap – Code Less, Design More!</h1>
 					</div>
 				</div>
 			</div>
