@@ -1,7 +1,10 @@
 /** @format */
+
+"use client";
 import "./Home.scss";
 import "../styles/reset.scss";
 import "../styles/main.scss";
+import { useEffect } from "react";
 export default function App() {
 	return (
 		<div className="home">
