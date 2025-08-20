@@ -8,6 +8,7 @@ import { Tab, Tabs } from "@heroui/tabs";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { Moon, PencilRuler, Sun, SunMoon } from "lucide-react";
+import Link from "next/link";
 
 function Header() {
 	const pathname = usePathname();
@@ -36,9 +37,9 @@ function Header() {
 		<header className="header">
 			<div className="conteiner header__wrapper">
 				<div className="header__name">
-					<a href="/">
+					<Link href="/">
 						<PencilRuler className="header__logo" />
-					</a>
+					</Link>
 					<h1 className="header__title">Generate your {pathname != "/" ? mode : "css code"}</h1>
 				</div>
 				<div className="">
