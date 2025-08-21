@@ -18,13 +18,20 @@
 		height: 92dvh;
 		// backdrop-filter: blur(1px);
 	}
+	&__description {
+		margin-top: 10px;
+		text-align: center;
+		z-index: 10;
+		font-size: 28px;
+		color: hsl(var(--heroui-default-500) / 1);
+	}
 	&__title {
 		text-align: center;
 		z-index: 10;
 		font-size: 48px;
 	}
 	&__buttonBlocks {
-		margin-top: 20vh;
+		margin-top: 17vh;
 		z-index: 20;
 		display: flex;
 		justify-content: space-between;
@@ -37,10 +44,13 @@
 	}
 	&__button {
 		// width: 230px;
-		background-color: hsl(var(--heroui-background) / 1);
-		@media (max-width: 768px) {
-			& {
-				background-color: hsl(var(--heroui-content1) / 1);
+
+		&_dark {
+			background-color: hsl(var(--heroui-background) / 1);
+			@media (max-width: 768px) {
+				& {
+					background-color: hsl(var(--heroui-content1) / 1);
+				}
 			}
 		}
 	}
