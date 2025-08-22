@@ -41,30 +41,6 @@ function Header() {
 					<h1 className="header__title">Generate your {pathname != "/" ? mode : "css code"}</h1>
 				</div>
 				<div className="">
-					{/* <Tabs variant="bordered" className="header__themeButtons" selectedKey={theme} size="sm">
-						<Tab
-							key="light"
-							title={<Sun size={18} />}
-							onClick={() => {
-								setTheme("light");
-							}}
-						/>
-						<Tab
-							className="header__themeButton"
-							key="dark"
-							title={<Moon size={18} />}
-							onClick={() => {
-								setTheme("dark");
-							}}
-						/>
-						<Tab
-							key="system"
-							title={<SunMoon />}
-							onClick={() => {
-								setTheme("system");
-							}}
-						/>
-					</Tabs> */}
 					<Tabs selectedKey={pathname} size="lg" variant="underlined" className="header__tabs">
 						<Tab key="/gradient" href="/gradient" title="Gradient" />
 						<Tab key="/neonText" href="/neonText" title="Neon text" />

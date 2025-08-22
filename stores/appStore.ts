@@ -16,7 +16,6 @@ const useAppStore = create<AppStore>()(
 			mode: "gradient",
 			setMode: (value) =>
 				set((state) => {
-					console.log(state.mode, value);
 					return { mode: value };
 				}),
 

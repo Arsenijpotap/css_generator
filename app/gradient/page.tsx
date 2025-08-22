@@ -36,8 +36,6 @@ export default function Gradient() {
 		// randomizeColors()
 	});
 	colorsCss = colorsCss.slice(0, -1);
-	console.log(colorsCss);
-	// changePos(0,35)
 	return (
 		<div className="conteiner">
 			<div className="gradient main">
@@ -99,8 +97,6 @@ export default function Gradient() {
 									type="color"
 									onChange={(e) => {
 										changeColor(id, e.target.value);
-										console.log(e.target.value);
-										console.log(id);
 									}}
 									value={data.color}
 									className="gradient__color"

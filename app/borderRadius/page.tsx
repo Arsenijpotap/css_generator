@@ -97,10 +97,8 @@ export default function BorderRadius() {
 			radiusValues["bottom-left"].second +
 			unit
 		: "" + radiusValues["top-left"].first + unit + " " + radiusValues["top-right"].first + unit + " " + radiusValues["bottom-right"].first + unit + " " + radiusValues["bottom-left"].first + unit + " ";
-	console.log(borderRadiusCss);
 	let index = 1;
 	linkTypes.forEach((value, ind) => {
-		console.log(value.name, linkType);
 		if (value.name.toLowerCase() == linkType) {
 			index = ind + 1;
 		}
@@ -177,7 +175,6 @@ export default function BorderRadius() {
 										let name = (arr[0] + "-" + arr[1]) as "top-right" | "top-left" | "bottom-left" | "bottom-right";
 										setValue(name, radiusValues[name].first);
 									});
-									console.log(isSimmetryActive);
 								}, 100);
 							}}
 							defaultSelected
@@ -189,7 +186,6 @@ export default function BorderRadius() {
 					{directions.map((arr, index) => {
 						let rotate = -90 + index * 90;
 						let name = (arr[0] + "-" + arr[1]) as "top-right" | "top-left" | "bottom-left" | "bottom-right";
-						console.log(name);
 						return (
 							<div key={name}>
 								<div className="borderRadius__radiusBlock">

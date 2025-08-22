@@ -4,10 +4,8 @@ import { Button } from "@heroui/button";
 import { addToast } from "@heroui/toast";
 
 function CopyButton({ text }: { text: string }) {
-	text = "    f.   ff f f.      f f f f";
-	let text1 = text.replaceAll(/\\s+/g, " ").trim();
-	console.log(text1);
 	const handleCopy = async () => {
+		text = text.trim().replaceAll(" ;", ";").replaceAll("  ", " ");
 		try {
 			if (navigator.clipboard) {
 				await navigator.clipboard.writeText(text);

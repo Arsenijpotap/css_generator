@@ -30,21 +30,27 @@ function NeonText() {
 	const animationType = useNeonTextStore((state) => state.animationType);
 	const setAnimationType = useNeonTextStore((state) => state.setAnimationType);
 	const randomizeValues = useNeonTextStore((state) => state.randomizeValues);
+	const [currentAnimationCss, setAnimationCss] = useState("");
 	let animationCss = "";
 	useEffect(() => {
 		const style = document.createElement("style");
 		switch (animationType) {
 			case "pulse":
 				animationCss = `
-      @keyframes neonAnimation {
-        0%,100% { transform: scale(1);  }
-        50% { transform: scale(${1 + level / 100}); }
-       
-      }
-      .neonText__exampleText {
-        animation: neonAnimation ${time}s infinite;
-      }
-    `;
+@keyframes neonAnimation {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(${1 + level / 100});
+  }
+}
+
+.neonText__exampleText {
+  color: #ffffff;
+  animation: neonAnimation ${time}s infinite;
+}
+`;
 				style.textContent = animationCss;
 				break;
 			case "sharp":
@@ -60,21 +66,28 @@ function NeonText() {
 							.padStart(2, "0")
 					},`;
 				}
-				console.log(41 + Math.min(Math.round(30 / time) / 10, 1));
 				shadowCss = shadowCss.slice(0, -1);
 				animationCss = `
-      @keyframes neonAnimation {
-      0%,40%,${41 + Math.min(Math.round(30 / time) / 10, 1)}%,${Math.round(41 + Math.min(18 / time, 10)) + Math.min(Math.round(30 / time) / 10, 1)}%,100%   { text-shadow: ${shadowCss}}
-	  41%,${Math.round(41 + Math.min(18 / time, 10))}% { text-shadow: none }
-    
-    
-	
-      }
-      .neonText__exampleText {
-	  transition:0s;
-    animation: neonAnimation ${time}s step-end infinite;
-      }
-    `;
+@keyframes neonAnimation {
+  0%,
+  40%,
+  ${41 + Math.min(Math.round(30 / time) / 10, 1)}%,
+  ${Math.round(41 + Math.min(18 / time, 10)) + Math.min(Math.round(30 / time) / 10, 1)}%,
+  100% {
+    text-shadow: ${shadowCss};
+  }
+  
+  41%,
+  ${Math.round(41 + Math.min(18 / time, 10))}% {
+    text-shadow: none;
+  }
+}
+
+.neonText__exampleText {
+  transition: 0s;
+  animation: neonAnimation ${time}s step-end infinite;
+}
+`;
 				style.textContent = animationCss;
 				break;
 			case "smooth":
@@ -106,15 +119,22 @@ function NeonText() {
 				endShadowCss = endShadowCss.slice(0, -1);
 
 				animationCss = `
-      @keyframes neonAnimation {
-        0%,100% { text-shadow: ${inithialShadowCss}}
-        40% { text-shadow: ${endShadowCss} }
-       
-      }
-      .neonText__exampleText {
-        animation: neonAnimation ${time}s infinite;
-      }
-    `;
+@keyframes neonAnimation {
+  0%,
+  100% {
+    text-shadow: ${inithialShadowCss};
+  }
+  
+  40% {
+    text-shadow: ${endShadowCss};
+  }
+}
+
+.neonText__exampleText {
+  animation: neonAnimation ${time}s infinite;
+  animation-timing-function: ease-in-out;
+}
+`;
 				style.textContent = animationCss;
 				break;
 			default:
@@ -122,9 +142,8 @@ function NeonText() {
 		}
 
 		document.head.appendChild(style);
-
+		setAnimationCss(animationCss);
 		return () => {
-			// Очистка при размонтировании
 			document.head.removeChild(style);
 		};
 	}, [time, level, animationType, blur, size, color, opacity]);
@@ -147,8 +166,7 @@ function NeonText() {
 	if (animationType == "off") {
 		copyText = "text-shadow: " + shadowCss + ";";
 	} else {
-		copyText = animationCss.replace(".neonText__exampleText {", ".NeonText {" + shadowCss);
-		console.log(copyText);
+		copyText = currentAnimationCss.replace(".neonText__exampleText {", animationType == "pulse" ? ".NeonText { text-align:center;\n text-shadow: " + shadowCss + ";" : ".NeonText {");
 	}
 	return (
 		<div className="conteiner">
@@ -245,7 +263,6 @@ function NeonText() {
 							type="color"
 							onChange={(e) => {
 								setColor(e.target.value);
-								console.log(e.target.value);
 							}}
 							value={color}
 							className="neonText__color"
