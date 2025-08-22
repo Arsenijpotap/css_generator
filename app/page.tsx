@@ -26,9 +26,6 @@ export default function App() {
 					<div className="home__line"></div>
 					<div className="home__line"></div>
 					<div className="home__line"></div>
-					<div className="home__line"></div>
-					<div className="home__line"></div>
-					<div className="home__line"></div>
 					<div className="home__content">
 						<h1 className="home__title">Generate CSS in a Snap – Code Less, Design More!</h1>
 						<h1 className="home__description">Try to create your own unique style!</h1>

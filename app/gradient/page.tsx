@@ -27,9 +27,6 @@ export default function Gradient() {
 	const randomizeColors = useGradientStore((state) => state.randomizeColors);
 	const deleteColor = useGradientStore((state) => state.deleteColor);
 
-	const copied = useAppStore((state) => state.copied);
-	const setCopied = useAppStore((state) => state.setCopied);
-
 	let colorsCss = "";
 	const sortedColorsList = [...colorsList].sort((a, b) => a.position - b.position);
 	sortedColorsList.forEach((val) => {

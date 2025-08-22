@@ -30,10 +30,6 @@ function NeonText() {
 	const animationType = useNeonTextStore((state) => state.animationType);
 	const setAnimationType = useNeonTextStore((state) => state.setAnimationType);
 	const randomizeValues = useNeonTextStore((state) => state.randomizeValues);
-
-	const copied = useAppStore((state) => state.copied);
-	const setCopied = useAppStore((state) => state.setCopied);
-
 	let animationCss = "";
 	useEffect(() => {
 		const style = document.createElement("style");
@@ -131,7 +127,7 @@ function NeonText() {
 			// Очистка при размонтировании
 			document.head.removeChild(style);
 		};
-	}, [time, level, animationType, blur, size, color, opacity, copied]);
+	}, [time, level, animationType, blur, size, color, opacity]);
 	let shadowCss = "";
 	if (animationType == "off" || animationType == "pulse") {
 		for (let i = 5; i <= 20; i *= 2) {
