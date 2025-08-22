@@ -1,0 +1,52 @@
+/** @format */
+
+.infoBlock {
+	z-index: 100;
+	position: absolute;
+	bottom: 15px;
+	left: 15px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	width: 84px;
+	height: 40px;
+	border-radius: 15px;
+	padding: 0 4px;
+	background-color: hsl(var(--heroui-background) / 1);
+	color: color-mix(in oklab, hsl(var(--heroui-default-300) / 1) 70%, black);
+	border: 1px solid color-mix(in oklab, hsl(var(--heroui-default-300) / 1) 50%, transparent);
+	@media (max-width: 768px) {
+		& {
+			border: none;
+			outline: none;
+			position: static;
+			border-radius: 0;
+			width: 100%;
+			margin-top: 30px;
+			background-color: hsl(var(--heroui-default-100) / 1) !important;
+			box-shadow: none;
+			color: hsl(var(--heroui-foreground) / 1);
+		}
+	}
+
+	&__icon {
+		height: 20px;
+	}
+	&__themeButton {
+		width: 24px;
+		height: 24px;
+		transition: 0.2s;
+		&:hover {
+			color: hsl(var(--heroui-foreground) / 1);
+		}
+	}
+	&__link {
+		width: 24px;
+		height: 24px;
+		transition: 0.2s;
+		&:hover {
+			color: hsl(var(--heroui-foreground) / 1);
+		}
+	}
+}
