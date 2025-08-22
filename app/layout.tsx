@@ -8,6 +8,7 @@ import { HeroUIProvider } from "@heroui/system";
 import { Providers } from "./providers";
 import { ThemeProvider } from "next-themes";
 import { ToastProvider } from "@heroui/toast";
+import InfoBlock from "@/components/InfoBlock/InfoBlock";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					<HeroUIProvider>
 						<Header />
 						{children}
+						<InfoBlock />
 					</HeroUIProvider>
 				</Providers>
 			</body>

@@ -14,8 +14,6 @@ function Header() {
 	const pathname = usePathname();
 	const mode = useAppStore((state) => state.mode);
 	const setMode = useAppStore((state) => state.setMode);
-	const theme = useAppStore((state) => state.theme);
-	const setTheme = useAppStore((state) => state.setTheme);
 
 	useEffect(() => {
 		switch (pathname) {

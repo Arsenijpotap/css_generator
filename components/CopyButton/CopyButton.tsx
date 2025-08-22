@@ -2,16 +2,16 @@
 import useAppStore from "@/stores/appStore";
 import { Button } from "@heroui/button";
 import { addToast } from "@heroui/toast";
+
 function CopyButton({ text }: { text: string }) {
-	const copied = useAppStore((state) => state.copied);
-	const setCopied = useAppStore((state) => state.setCopied);
+	text = "    f.   ff f f.      f f f f";
+	let text1 = text.replaceAll(/\\s+/g, " ").trim();
+	console.log(text1);
 	const handleCopy = async () => {
 		try {
-			// Пытаемся использовать modern API
 			if (navigator.clipboard) {
 				await navigator.clipboard.writeText(text);
 			} else {
-				// Fallback для старых браузеров
 				const textarea = document.createElement("textarea");
 				textarea.value = text;
 				textarea.style.position = "fixed";
@@ -20,10 +20,6 @@ function CopyButton({ text }: { text: string }) {
 				document.execCommand("copy");
 				document.body.removeChild(textarea);
 			}
-
-			setCopied(true);
-			setTimeout(() => setCopied(false), 2000);
-
 			addToast({
 				color: "success",
 				title: "Copied successfully!",
